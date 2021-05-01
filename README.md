@@ -32,6 +32,12 @@ load sbert model:
 $ python -m embedding_service.server --embedding sbert --model msmarco-distilbert-base-v3
 ```
 
+Create wapo database from .jl file:
+
+```shell
+$ python db.py 
+```
+
 **Run Instructions**: 
 
 - Build Index:
