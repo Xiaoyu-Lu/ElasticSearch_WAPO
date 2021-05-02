@@ -65,7 +65,6 @@ def create_tables():
     """
     db.create_tables([Doc], safe=True)  # Create schema
     wapo_docs = list(load_wapo(wapo_jl_path))
-    # wapo_docs = list(load_wapo("pa4_data/test_corpus.jl"))
     print("populating the table")
     for batch in chunked(wapo_docs, 100):
         Doc.insert_many(batch).execute()  # populate the table
