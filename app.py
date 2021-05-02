@@ -62,7 +62,7 @@ def next_page(page_id):
 # document page
 @app.route("/doc_data/<int:doc_id>")
 def doc_data(doc_id):
-    doc = query_doc(doc_id)  # Get the hit from response
+    doc = query_doc(doc_id)  # Get the hit from db
     return render_template("doc.html", doc=doc)
 
 
