@@ -1,14 +1,14 @@
 # load fasttext embeddings that are trained on wiki news. Each embedding has 300 dimensions
-python -m embedding_service.server --embedding fasttext --model data/wiki-news-300d-1M-subword.vec
+#python -m embedding_service.server --embedding fasttext --model data/wiki-news-300d-1M-subword.vec
 
 # load sentence BERT embeddings that are trained on msmarco. Each embedding has 768 dimensions
-python -m embedding_service.server --embedding sbert --model msmarco-distilbert-base-v3
+#python -m embedding_service.server --embedding sbert --model msmarco-distilbert-base-v3
 
 # load sentence longformer embeddings that are trained on 'allenai/longformer-base-4096'. Each embedding has 768 dimensions
-python -m embedding_service.server --embedding longformer --model allenai/longformer-base-4096
+#python -m embedding_service.server --embedding longformer --model allenai/longformer-base-4096
 
 ## load wapo docs into the index called "wapo_docs_50k"
-python load_es_index.py --index_name wapo_docs_50k --wapo_path data/subset_wapo_50k_sbert_ft_lf_filtered.jl
+#python load_es_index.py --index_name wapo_docs_50k --wapo_path data/subset_wapo_50k_sbert_ft_lf_filtered.jl
 
 echo "----------------Evalutation 805----------------"
 TOPIC_ID=805

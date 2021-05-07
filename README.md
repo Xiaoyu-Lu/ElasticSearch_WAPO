@@ -33,6 +33,12 @@ load sbert model:
 $ python -m embedding_service.server --embedding sbert --model msmarco-distilbert-base-v3
 ```
 
+load longformer model:
+
+```shell
+python -m embedding_service.server --embedding longformer --model allenai/longformer-base-4096
+```
+
 Create wapo database from .jl file:
 
 ```shell
@@ -45,7 +51,7 @@ $ python db.py
 
 ```shell
 # load wapo docs into the index called "wapo_docs_50k"
-$ python load_es_index.py --index_name wapo_docs_50k --wapo_path data/subset_wapo_50k_sbert_ft_filtered.jl
+$ python load_es_index.py --index_name wapo_docs_50k --wapo_path data/subset_wapo_50k_sbert_ft_lf_filtered.jl
 ```
 
 - For Evaluation: 
