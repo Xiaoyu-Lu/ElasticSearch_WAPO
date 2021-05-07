@@ -19,17 +19,24 @@ $ ./bin/elasticsearch
 ```
 
 **Preparation:**
+You need to download the pretrained fastText embedding on wiki news and put it into data/ folder. You can click [this](https://dl.fbaipublicfiles.com/fasttext/vectors-english/wiki-news-300d-1M-subword.vec.zip) link to download. You don’t need to download any pretrained model for sentence transformers, it will be loaded the first time it's called.
 
-load fasttext model:
+load fasttext model (download):
 
 ```shell
-$ python -m embedding_service.server --embedding fasttext  --model pa5_data/wiki-news-300d-1M-subword.vec
+$ python -m embedding_service.server --embedding fasttext  --model data/wiki-news-300d-1M-subword.vec
 ```
 
 load sbert model:
 
 ```shell
 $ python -m embedding_service.server --embedding sbert --model msmarco-distilbert-base-v3
+```
+
+Create wapo database from .jl file:
+
+```shell
+$ python db.py 
 ```
 
 **Run Instructions**: 
