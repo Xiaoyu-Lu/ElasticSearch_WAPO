@@ -3,9 +3,12 @@ wrapper for loading embeddings and encoding text
 it will be called by the client
 """
 from typing import List, Any
+
+import torch
 from tqdm import tqdm
 import numpy as np
 from sentence_transformers import SentenceTransformer
+from transformers import LongformerModel, LongformerTokenizer
 
 from embedding_service.text_processing import TextProcessing
 
@@ -94,6 +97,57 @@ class FastTextEmbedding:
         return doc_embeddings
 
 
+class LongformerEmbedding:
+    def __init__(self, model_name: str) -> None:
+        """
+        wrapper for loading Longformer embeddings (https://github.com/UKPLab/sentence-transformers)
+        :param model_name: pretrained model name, check (https://huggingface.co/transformers/pretrained_models.html) for other options
+        """
+        try:
+            self.model = LongformerModel.from_pretrained(model_name)
+            print("Model loaded Successfully !")
+        except Exception as e:
+            raise ValueError(f"Error loading Model {model_name}, " + str(e))
+
+        try:
+            self.tokenizer = LongformerTokenizer.from_pretrained(model_name)
+            print("Tokenizer loaded Successfully !")
+        except Exception as e:
+            raise ValueError(f"Error loading Tokenizer {model_name}, " + str(e))
+
+        self.max_len = self.tokenizer.model_max_length
+
+    def _single_encode_text(self, text: str) -> np.array:
+        """tokenize and encode a single content string"""
+        input_ids = self._tokenize_text(text)
+        print(f"id length: {len(input_ids[0])}")
+        try:
+            text_embeddings = self.model(input_ids)
+        except IndexError as e:
+            print(f"input text: {text}")
+            print(f"input inds: {input_ids}")
+            raise e
+
+        return text_embeddings.pooler_output.detach().numpy()
+
+    def _tokenize_text(self, text: str) -> torch.Tensor:
+        """tokenize text and return Tensor of token IDs"""
+        # specify max length truncation to avoid IndexError due to exceeding length
+        return torch.tensor(self.tokenizer.encode(text, max_length=self.max_len, truncation=True)).unsqueeze(0)
+
+    def encode(self, texts: List[str], pooling: str = "mean") -> np.array:
+        """
+
+        :param texts: list of texts
+        :param pooling: default "mean", placeholder to keep consistent with
+        :return:
+        """
+        doc_embeddings = np.vstack(
+            [self._single_encode_text(text) for text in texts]
+        )
+        return doc_embeddings
+
+
 class Encoder:
     def __init__(self, embedding: str, model: str) -> None:
         """
@@ -111,6 +165,8 @@ class Encoder:
             self.embedding_model = SBERTEmbedding(self.model)
         elif self.embedding == "fasttext":
             self.embedding_model = FastTextEmbedding(self.model)
+        elif self.embedding == 'longformer':
+            self.embedding_model = LongformerEmbedding(self.model)
         else:
             raise ValueError(f"cannot find model: {self.model}.")
 

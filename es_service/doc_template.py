@@ -41,6 +41,9 @@ class BaseDoc(Document):
     sbert_vector = DenseVector(
         dims=768
     )  # sentence BERT embedding in the DenseVector field
+    lf_vector = DenseVector(
+        dims=768
+    )
 
     def save(self, *args, **kwargs):
         """

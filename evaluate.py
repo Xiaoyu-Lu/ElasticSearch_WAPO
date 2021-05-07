@@ -71,6 +71,8 @@ def get_response(index_name: str,
             encoder = EmbeddingClient(host="localhost", embedding_type="fasttext")
         elif embed_methods == "sbert_vector":
             encoder = EmbeddingClient(host="localhost", embedding_type="sbert")
+        elif embed_methods == "lf_vector":
+            encoder = EmbeddingClient(host="localhost", embedding_type="sbert")
         else:
             raise ValueError
 
@@ -129,7 +131,8 @@ def main():
         "--query_type", required=True, type=str, help="Option[title,description,narration]"
     )
     parser.add_argument(
-        "--vector_name", required=False, type=str, default="bm25", help="Option[sbert_vector, fasttext_vector]"
+        "--vector_name", required=False, type=str, default="bm25",
+        help="Option[sbert_vector, fasttext_vector, lf_vector]"
     )
 
     parser.add_argument(
