@@ -4,3 +4,5 @@ sentence-transformers
 flask
 numpy
 zmq
+peewee
+nltk
