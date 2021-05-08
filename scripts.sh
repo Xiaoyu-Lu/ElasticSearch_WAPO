@@ -7,8 +7,8 @@
 # load sentence longformer embeddings that are trained on 'allenai/longformer-base-4096'. Each embedding has 768 dimensions
 #python -m embedding_service.server --embedding longformer --model allenai/longformer-base-4096
 
-## load wapo docs into the index called "wapo_docs_50k"
-#python load_es_index.py --index_name wapo_docs_50k --wapo_path data/subset_wapo_50k_sbert_ft_lf_filtered.jl
+## load wapo docs into the index called "wapo_docs_50k_lf"
+#python load_es_index.py --index_name wapo_docs_50k_lf --wapo_path data/subset_wapo_50k_sbert_ft_lf_filtered.jl
 
 echo "----------------Evalutation 805----------------"
 TOPIC_ID=805
