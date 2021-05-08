@@ -10,7 +10,7 @@ app = Flask(__name__)
 es = Elasticsearch()
 DOC_PER_PAGE = 8
 K = 20  # less than or equal to: [10000]
-INDEX_NAME = "wapo_docs_50k"
+INDEX_NAME = "wapo_docs_50k_lf"
 storage = {}  # {query_text: response}
 connections.create_connection(hosts=["localhost"], timeout=100, alias="default")
 
