@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <style>
         body {
-            {#background-color: lightskyblue;#}
-            {#background-image: url({{ url_for('static', filename='test.jpg') }});#}
-            {#background-repeat:no-repeat;#}
-            {#background-position-x: -50px;#}
-            font-family:"Georgia"
+        {#background-color: lightskyblue;#}{#background-image: url({{ url_for('static', filename='test.jpg') }});#}{#background-repeat:no-repeat;#}{#background-position-x: -50px;#} font-family: "Georgia"
         }
-        *{
+
+        * {
             margin: 10px;
         }
     </style>
@@ -23,14 +20,20 @@
     <input type="text" id="query" name="query" size=50 value="{{ query_text }}">
 
     <br> <strong>Analyzer Selection: </strong>
-    <input type="radio" name="options_analyzer" id="option1" value="basic_analyzer" {%  if option_analyzer=="basic_analyzer" %} checked="checked" {% endif %}> Basic analyzer </input>
-    <input type="radio" name="options_analyzer" id="option2" value="custom_analyzer" {%  if option_analyzer=="custom_analyzer" %} checked="checked" {% endif %}> Custom analyzer </input>
+    <input type="radio" name="options_analyzer" id="option1" value="basic_analyzer"
+            {% if option_analyzer=="basic_analyzer" %} checked="checked" {% endif %}> Basic analyzer </input>
+    <input type="radio" name="options_analyzer" id="option2" value="custom_analyzer"
+            {% if option_analyzer=="custom_analyzer" %} checked="checked" {% endif %}> Custom analyzer </input>
 
     <br> <strong>Embedding Selection:</strong>
-    <input type="radio" name="options_embed" id="option1" value="bm25" {%  if option_embed=="bm25" %} checked="checked" {% endif %}> BM25 </input>
-    <input type="radio" name="options_embed" id="option2" value="ft_vector" {%  if option_embed=="ft_vector" %} checked="checked" {% endif %}> FastText </input>
-    <input type="radio" name="options_embed" id="option3" value="sbert_vector" {%  if option_embed=="sbert_vector" %} checked="checked" {% endif %}> Sentence Bert </input>
-    <input type="radio" name="options_embed" id="option4" value="lf_vector" {%  if option_embed=="lf_vector" %} checked="checked" {% endif %}> Longformer  </input>
+    <input type="radio" name="options_embed" id="option1" value="bm25" {% if option_embed=="bm25" %}
+           checked="checked" {% endif %}> BM25 </input>
+    <input type="radio" name="options_embed" id="option2" value="ft_vector" {% if option_embed=="ft_vector" %}
+           checked="checked" {% endif %}> FastText </input>
+    <input type="radio" name="options_embed" id="option3" value="sbert_vector" {% if option_embed=="sbert_vector" %}
+           checked="checked" {% endif %}> Sentence Bert </input>
+    <input type="radio" name="options_embed" id="option4" value="lf_vector" {% if option_embed=="lf_vector" %}
+           checked="checked" {% endif %}> Longformer  </input>
     <br> <input type="submit" value="Search">
 </form>
 
@@ -40,29 +43,31 @@
 
 Total hits: {{ hits_num }}
 
-{%  if page_id<page_num %}
+{% if page_id<page_num %}
     {% for i in range((page_id-1)*DOC_PER_PAGE, page_id*DOC_PER_PAGE) %}
-        <h3> {{ i + 1 }}. <a href={{ url_for('doc_data',doc_id=ids_list[i])  }}>  <strong>{{ items_list[i - (page_id-1)*DOC_PER_PAGE].title }}</strong> </a> </h3>
-        <p> &nbsp &nbsp &nbsp &sect {{ items_list[i - (page_id-1)*DOC_PER_PAGE].content[:150] }} ... </p>
-    {%  endfor %}
+        <h3> {{ i + 1 }}. <a href={{ url_for('doc_data',doc_id=ids_list[i].meta.id) }}>
+            <strong>{{ items_list[i - (page_id-1)*DOC_PER_PAGE].title }}</strong> </a></h3>
+        <p> &nbsp &nbsp &nbsp &sect {{ contents[ids_list[i].meta.id] |safe }} </p>
+    {% endfor %}
 {% else %}
     {% for i in range((page_id-1)*DOC_PER_PAGE, hits_num) %}
-        <h3> {{ i + 1 }}. <a href={{ url_for('doc_data',doc_id=ids_list[i])  }}>  <strong>{{ items_list[i - (page_id-1)*DOC_PER_PAGE].title }}</strong> </a> </h3>
-        <p> &nbsp &nbsp &nbsp &sect {{ items_list[i- (page_id-1)*DOC_PER_PAGE].content[:150] }} ... </p>
-    {%  endfor %}
+        <h3> {{ i + 1 }}. <a href={{ url_for('doc_data',doc_id=ids_list[i].meta.id) }}>
+            <strong>{{ items_list[i - (page_id-1)*DOC_PER_PAGE].title }}</strong> </a></h3>
+        <p> &nbsp &nbsp &nbsp &sect {{ contents[ids_list[i].meta.id] |safe }} </p>
+    {% endfor %}
 {% endif %}
 <br>
-{%  if page_id>1 %}
+{% if page_id>1 %}
     {% set new_page_id = page_id - 1 %}
     page id = {{ new_page_id }}
     <form action="{{ url_for('next_page', page_id=new_page_id) }}" method="post">
-    <input type="submit" value="Prev Page">
+        <input type="submit" value="Prev Page">
     </form>
 {% endif %}
-{%  if page_id<page_num %}
+{% if page_id<page_num %}
     {% set new_page_id = page_id + 1 %}
     <form action="{{ url_for('next_page', page_id=new_page_id) }}" method="post">
-    <input type="submit" value="Next Page">
+        <input type="submit" value="Next Page">
     </form>
 {% endif %}
 
