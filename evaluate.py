@@ -72,7 +72,7 @@ def get_response(index_name: str,
         elif embed_methods == "sbert_vector":
             encoder = EmbeddingClient(host="localhost", embedding_type="sbert")
         elif embed_methods == "lf_vector":
-            encoder = EmbeddingClient(host="localhost", embedding_type="sbert")
+            encoder = EmbeddingClient(host="localhost", embedding_type="longformer")
         else:
             raise ValueError
 

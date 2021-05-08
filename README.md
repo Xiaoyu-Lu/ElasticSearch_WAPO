@@ -36,7 +36,7 @@ $ python -m embedding_service.server --embedding sbert --model msmarco-distilber
 load longformer model:
 
 ```shell
-python -m embedding_service.server --embedding longformer --model allenai/longformer-base-4096
+$ python -m embedding_service.server --embedding longformer --model allenai/longformer-base-4096
 ```
 
 Create wapo database from .jl file:
