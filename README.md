@@ -5,6 +5,8 @@ Team members: Yonglin Wang,  Xiaoyu Lu, Yun-jing Lee, Ruobin Hu
 
 
 
+*Activate your virtual environment first.*
+
 **Dependencies**: 
 
 ```
