@@ -18,7 +18,7 @@ from peewee import chunked
 data_dir = Path("data")
 db_name = "docs50k.db"
 db_path = data_dir.joinpath(db_name)
-wapo_jl_path = "data/subset_wapo_50k_sbert_ft_lf_filtered.jl"
+wapo_jl_path = data_dir.joinpath("subset_wapo_50k_sbert_ft_lf_filtered.jl")
 
 # create a sqlite database stored in pa4_data/wapo_docs.db
 # http://docs.peewee-orm.com/en/latest/peewee/database.html
