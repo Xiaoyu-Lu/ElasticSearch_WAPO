@@ -16,9 +16,9 @@ import json
 from peewee import chunked
 
 data_dir = Path("data")
-db_name = "wapo_docs_50k.db"
+db_name = "docs50k.db"
 db_path = data_dir.joinpath(db_name)
-wapo_jl_path = "data/subset_wapo_50k_sbert_ft_filtered.jl"
+wapo_jl_path = "data/subset_wapo_50k_sbert_ft_lf_filtered.jl"
 
 # create a sqlite database stored in pa4_data/wapo_docs.db
 # http://docs.peewee-orm.com/en/latest/peewee/database.html
@@ -114,16 +114,17 @@ def load_wapo(wapo_jl_path: Union[str, os.PathLike]) -> Iterator[Dict]:
 
 
 if __name__ == "__main__":
-    # delete the existed ones before rebuild
-    if db_path.exists():
-        print("deleting...")
-        Path(__file__).parent.joinpath(db_path).unlink()
-    df_path_shm = data_dir.joinpath(f"{db_name}-shm")
-    if df_path_shm.exists():
-        Path(__file__).parent.joinpath().unlink(df_path_shm)
-        Path(__file__).parent.joinpath(data_dir.joinpath(f"{db_name}-wal")).unlink()
-    print("creating...")
-    create_tables()
-    print("Done...")
-    for i in range(10):
-        print(query_doc(i))
+    pass
+    # # delete the existed ones before rebuild
+    # if db_path.exists():
+    #     print("deleting...")
+    #     Path(__file__).parent.joinpath(db_path).unlink()
+    # df_path_shm = data_dir.joinpath(f"{db_name}-shm")
+    # if df_path_shm.exists():
+    #     Path(__file__).parent.joinpath().unlink(df_path_shm)
+    #     Path(__file__).parent.joinpath(data_dir.joinpath(f"{db_name}-wal")).unlink()
+    # print("creating...")
+    # create_tables()
+    # print("Done...")
+    # for i in range(10):
+    #     print(query_doc(i))
