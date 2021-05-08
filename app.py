@@ -4,7 +4,6 @@ from elasticsearch_dsl.connections import connections
 from elasticsearch import Elasticsearch
 from db import query_doc
 from db805 import embolden_text_805
-from utils import normalize_query
 
 app = Flask(__name__)
 es = Elasticsearch()
@@ -45,9 +44,7 @@ def results():
     storage[query_text] = response
     items = [hit for hit in response[: DOC_PER_PAGE]]
 
-    query_tokens = normalize_query(query_text)
-    storage["query_tokens"] = query_tokens
-    contents = {hit.meta.id: embolden_text_805(query_tokens, hit.meta.id) for hit in response[: DOC_PER_PAGE]}
+    contents = {hit.meta.id: embolden_text_805(query_text, hit.meta.id) for hit in response[: DOC_PER_PAGE]}
     page_num = (len(response) - 1) // 8 + 1
 
     return render_template("results.html", items_list=items, ids_list=response, page_id=1, page_num=page_num,
@@ -61,8 +58,7 @@ def results():
 def next_page(page_id):
     response = storage[query_text]  # Get the response from dict - the storage
     items = [hit for hit in response[(page_id - 1) * DOC_PER_PAGE: page_id * DOC_PER_PAGE]]
-    query_tokens = storage["query_tokens"]
-    contents = {hit.meta.id: embolden_text_805(query_tokens, hit.meta.id) for hit in
+    contents = {hit.meta.id: embolden_text_805(query_text, hit.meta.id) for hit in
                 response[(page_id - 1) * DOC_PER_PAGE: page_id * DOC_PER_PAGE]}
 
     return render_template("results.html", items_list=items, ids_list=response, page_id=page_id, page_num=page_num,
@@ -75,8 +71,8 @@ def next_page(page_id):
 @app.route("/doc_data/<int:doc_id>")
 def doc_data(doc_id):
     print(doc_id)
-    doc = es.get_source(INDEX_NAME, doc_id)
-    # doc = query_doc(doc_id)
+    # doc = es.get_source(INDEX_NAME, doc_id)
+    doc = query_doc(doc_id)
     return render_template("doc.html", doc=doc)
 
 
