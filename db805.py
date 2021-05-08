@@ -15,7 +15,7 @@ import json
 import nltk
 import bisect
 from peewee import chunked
-from utils import get_word_dict, add_bold, get_seg
+from utils import get_word_dict, add_bold, get_seg, normalize_query
 import re
 from db import query_doc
 
@@ -122,13 +122,15 @@ def load_wapo(wapo_jl_path: Union[str, os.PathLike]) -> Iterator[Dict]:
             idx += 1
 
 
-def embolden_text_805(query_tokens: List[str], doc_idx: int) -> str:
+def embolden_text_805(query_text: str, doc_idx: int) -> str:
     """
     Embolden the keywords in query
     :param text:
     :return:
     """
-    # print(f"doc_idx:{doc_idx}")
+    print(f"doc_idx:{doc_idx}")
+
+    query_tokens = normalize_query(query_text)
     try:
         # database 805, select the word_idx_dict
         doc_dict: Dict[str, Any] = query_doc_805(doc_idx)
@@ -199,3 +201,5 @@ if __name__ == "__main__":
     # print("creating...")
     # create_tables()
     # print("Done...")
+
+    print(embolden_text_805('eating evasive species', 41059))
