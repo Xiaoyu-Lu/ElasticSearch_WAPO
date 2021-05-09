@@ -3,27 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        *{
-            margin-left: 50px;
-        }
-
         body {
-            {#background-color: lightskyblue;#}
+            {#background-color: antiquewhite;#}
             {#background-image: url({{ url_for('static', filename='test.jpg') }});#}
             {#background-repeat:no-repeat;#}
             {#background-position-x: -50px;#}
-            font-family:"Georgia"
+            font-family: "Times New Roman";
         }
     </style>
     <title>Washington Post Search</title>
 </head>
 <body text="#1B4F72">
 
-<h2>Washington Post Search</h2>
+<div style="padding-top:10px;padding-bottom: 15px; text-align: center">
+    <h1 style="color:#1B4F72">Washington Post Search</h1>
+</div>
+
 
 <form action="{{ url_for('results') }}" name="search" method="post">
+    <div style="padding-top: 15px; padding-left: 700px; text-align:left">
     <label for="query">Query:</label>
     <input type="text" id="query" name="query" size=50 placeholder="Enter Keyword Here">
+    <input type="submit" value="Search">
     <br> <strong> Analyzer Selection: </strong>
     <input type="radio" name="options_analyzer" id="option1" value="basic_analyzer"  checked="checked" > Basic analyzer </input>
     <input type="radio" name="options_analyzer" id="option2" value="custom_analyzer" > Custom analyzer </input>
@@ -33,7 +34,8 @@
     <input type="radio" name="options_embed" id="option2" value="ft_vector" > FastText </input>
     <input type="radio" name="options_embed" id="option3" value="sbert_vector" > Sentence Bert </input>
     <input type="radio" name="options_embed" id="option4" value="lf_vector" > Longformer  </input>
-    <br> <input type="submit" value="Search">
+
+    </div>
 </form>
 
 

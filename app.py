@@ -9,7 +9,7 @@ app = Flask(__name__)
 es = Elasticsearch()
 DOC_PER_PAGE = 8
 K = 20  # less than or equal to: [10000]
-INDEX_NAME = "wapo_docs_50k_lf"
+INDEX_NAME = "wapo_docs_50k"
 storage = {}  # {query_text: response}
 connections.create_connection(hosts=["localhost"], timeout=100, alias="default")
 
@@ -26,6 +26,8 @@ def results():
     global page_num, query_text, option_analyzer, option_embed
 
     query_text = request.form["query"]
+    if query_text == "":
+        return home()
     try:
         option_analyzer = request.form['options_analyzer']
     except:
@@ -71,7 +73,6 @@ def next_page(page_id):
 @app.route("/doc_data/<int:doc_id>")
 def doc_data(doc_id):
     print(doc_id)
-    # doc = es.get_source(INDEX_NAME, doc_id)
     doc = query_doc(doc_id)
     return render_template("doc.html", doc=doc)
 

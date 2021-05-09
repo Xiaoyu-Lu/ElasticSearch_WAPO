@@ -4,15 +4,23 @@
     <meta charset="UTF-8">
     <style>
         body {
-            background-color: lightskyblue;
+            {#background-color: antiquewhite;#}
+            font-family: "Times New Roman";
         }
     </style>
     <title> {{ doc["title"] }} </title>
 </head>
-<body>
-<h3>{{ doc["title"] }}</h3>
-<h4>Author: {{ doc["author"] }}</h4>
-<h4>Date: {{ doc["date"] }}</h4>
-<p> {{ doc["content"] | safe }} </p>
+<body text="#1B4F72">
+<div style="padding-top:10px;padding-bottom: 15px; text-align: center">
+    <h1 style="color:#1B4F72">Washington Post Search</h1>
+</div>
+<div style="text-align: center;">
+    <h3>{{ doc["title"] }}</h3>
+    <h4>Author: {{ doc["author"] }}</h4>
+    <h4>Date: {{ doc["published_date"] }}</h4>
+</div>
+<div style="padding-left: 50px; padding-right: 50px;">
+    <p style="line-height:2; text-align:justify;">  &nbsp &nbsp &nbsp {{ doc["content_str"] | safe }} </p>
+</div>
 </body>
 </html>

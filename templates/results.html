@@ -4,27 +4,34 @@
     <meta charset="UTF-8">
     <style>
         body {
-        {#background-color: lightskyblue;#}{#background-image: url({{ url_for('static', filename='test.jpg') }});#}{#background-repeat:no-repeat;#}{#background-position-x: -50px;#} font-family: "Georgia"
+            {#background-color: antiquewhite;#}
+            font-family: "Times New Roman";
         }
-
-        * {
-            margin: 10px;
+        a:link,a:visited{
+            text-decoration:none;
+        }
+        a:hover{
+            text-decoration:underline;
         }
     </style>
     <title>Washington Post Search</title>
 </head>
 <body text="#1B4F72">
-<h2>Washington Post Search</h2>
+
+<div style="padding: 10px 1000px 15px 300px;text-align: left">
+    <h1 style="color:#1B4F72">Washington Post Search</h1>
+</div>
+
 <form action="{{ url_for('results') }}" name="search" method="post">
+    <div style="padding-top: 15px; padding-left: 200px; padding-right: 1000px;text-align:left">
     <label for="query">Query:</label>
     <input type="text" id="query" name="query" size=50 value="{{ query_text }}">
-
+    <input type="submit" value="Search">
     <br> <strong>Analyzer Selection: </strong>
     <input type="radio" name="options_analyzer" id="option1" value="basic_analyzer"
             {% if option_analyzer=="basic_analyzer" %} checked="checked" {% endif %}> Basic analyzer </input>
     <input type="radio" name="options_analyzer" id="option2" value="custom_analyzer"
             {% if option_analyzer=="custom_analyzer" %} checked="checked" {% endif %}> Custom analyzer </input>
-
     <br> <strong>Embedding Selection:</strong>
     <input type="radio" name="options_embed" id="option1" value="bm25" {% if option_embed=="bm25" %}
            checked="checked" {% endif %}> BM25 </input>
@@ -34,43 +41,43 @@
            checked="checked" {% endif %}> Sentence Bert </input>
     <input type="radio" name="options_embed" id="option4" value="lf_vector" {% if option_embed=="lf_vector" %}
            checked="checked" {% endif %}> Longformer  </input>
-    <br> <input type="submit" value="Search">
+    </div>
 </form>
 
-<form action="{{ url_for('home') }}">
-    <input type="submit" value="Home">
-</form>
 
-Total hits: {{ hits_num }}
+<h3 style="padding-left: 200px;">Total hits: {{ hits_num }}</h3>
 
+<div style="padding-left: 200px; padding-right: 1000px;">
 {% if page_id<page_num %}
     {% for i in range((page_id-1)*DOC_PER_PAGE, page_id*DOC_PER_PAGE) %}
-        <h3> {{ i + 1 }}. <a href={{ url_for('doc_data',doc_id=ids_list[i].meta.id) }}>
+        <h3 style = "margin-bottom:10px; margin-top: 30px">  <a href={{ url_for('doc_data',doc_id=ids_list[i].meta.id) }}>
             <strong>{{ items_list[i - (page_id-1)*DOC_PER_PAGE].title }}</strong> </a></h3>
-        <p> &nbsp &nbsp &nbsp &sect {{ contents[ids_list[i].meta.id] |safe }} </p>
+       <p style="margin-top:10px; margin-bottom: 30px; line-height:1; text-align:justify;">  {{ items_list[i - (page_id-1)*DOC_PER_PAGE].date }}&nbsp-&nbsp{{ contents[ids_list[i].meta.id] |safe }} </p>
     {% endfor %}
 {% else %}
     {% for i in range((page_id-1)*DOC_PER_PAGE, hits_num) %}
-        <h3> {{ i + 1 }}. <a href={{ url_for('doc_data',doc_id=ids_list[i].meta.id) }}>
+        <h3 style = "margin-bottom:5px">  <a href={{ url_for('doc_data',doc_id=ids_list[i].meta.id) }}>
             <strong>{{ items_list[i - (page_id-1)*DOC_PER_PAGE].title }}</strong> </a></h3>
-        <p> &nbsp &nbsp &nbsp &sect {{ contents[ids_list[i].meta.id] |safe }} </p>
+        <p style = "margin-top:5px; line-height:1; text-align:justify;">  {{ items_list[i - (page_id-1)*DOC_PER_PAGE].date }}&nbsp-&nbsp{{ contents[ids_list[i].meta.id] |safe }} </p>
     {% endfor %}
 {% endif %}
-<br>
+</div>
+
 {% if page_id>1 %}
     {% set new_page_id = page_id - 1 %}
-    page id = {{ new_page_id }}
-    <form action="{{ url_for('next_page', page_id=new_page_id) }}" method="post">
+    <form style="float: left; padding-left: 200px;" action="{{ url_for('next_page', page_id=new_page_id) }}" method="post">
         <input type="submit" value="Prev Page">
     </form>
 {% endif %}
 {% if page_id<page_num %}
     {% set new_page_id = page_id + 1 %}
-    <form action="{{ url_for('next_page', page_id=new_page_id) }}" method="post">
+    <form style="float: right; padding-right: 1000px;" action="{{ url_for('next_page', page_id=new_page_id) }}" method="post">
         <input type="submit" value="Next Page">
     </form>
 {% endif %}
-
+<br>
+<br>
+<br>
 
 </body>
 </html>
