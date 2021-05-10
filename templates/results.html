@@ -14,6 +14,7 @@
             text-decoration:underline;
         }
     </style>
+    <script src="{{ url_for('static', filename='IFeelLucky.js') }}"></script>
     <title>Washington Post Search</title>
 </head>
 <body text="#1B4F72">
@@ -29,7 +30,7 @@
     <input type="text" id="query" name="keywords" size=40 {% if kw_text %}
     value="{{ kw_text }}" {% else %} placeholder="Enter keywords here, separated by whitespaces"
     {% endif %} >
-    <input type="submit" value="Search">
+    <input type="submit" id="btn_search" value="Search"><button type="button" id="btn_lucky">I feel lucky!</button>
 
     <br> <strong>Analyzer Selection: </strong>
     <input type="radio" name="options_analyzer" id="option1" value="basic_analyzer"

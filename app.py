@@ -38,21 +38,15 @@ def results():
     if query_text == "" and keywords_text == "":
         return home()
 
-    try:
-        option_analyzer = request.form['options_analyzer']
-    except:
-        option_analyzer = "basic_analyzer"  # default
-
-    try:
-        option_embed = request.form['options_embed']
-    except:
-        option_embed = "bm25"  # default
+    option_analyzer = request.form['options_analyzer'] \
+        if 'options_analyzer' in request.form else 'basic_analyzer'
+    option_embed = request.form['options_embed'] \
+        if 'options_embed' in request.form else 'bm25'
 
     print(option_analyzer)
     print(option_embed)
-    custom_analyzer = False
-    if option_analyzer == "custom_analyzer":
-        custom_analyzer = True
+
+    custom_analyzer = True if option_analyzer == "custom_analyzer" else False
 
     response = get_response(INDEX_NAME, query_text, custom_analyzer, option_embed, K, kw_query=keywords_text)
     storage[query_text][keywords_text] = response

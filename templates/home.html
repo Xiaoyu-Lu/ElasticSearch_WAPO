@@ -11,6 +11,7 @@
             font-family: "Times New Roman";
         }
     </style>
+    <script src="{{ url_for('static', filename='IFeelLucky.js') }}"></script>
     <title>Washington Post Search</title>
 </head>
 <body text="#1B4F72">
@@ -25,7 +26,7 @@
     <label for="query">Query:</label>
     <input type="text" id="query" name="query" size=50 placeholder="Enter query here">
         <input type="text" id="query" name="keywords" size=40 placeholder="Enter keywords here, separated by whitespaces">
-    <input type="submit" value="Search">
+    <input type="submit" id="btn_search" value="Search"><button type="button" id="btn_lucky">I feel lucky!</button>
     <br> <strong> Analyzer Selection: </strong>
     <input type="radio" name="options_analyzer" id="option1" value="basic_analyzer"  checked="checked" > Basic analyzer </input>
     <input type="radio" name="options_analyzer" id="option2" value="custom_analyzer" > Custom analyzer </input>
