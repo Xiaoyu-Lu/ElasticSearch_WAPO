@@ -8,8 +8,6 @@ Team members: Yonglin Wang,  Xiaoyu Lu, Yun-jing Lee, Ruobin Hu
 ### Activate Environment
 *Remember to always activate your virtual environment first.*
 
-
-
 ### First-time Running
 Run the following subsections only once, when you set up the project for the first time.
 #### Install Dependencies
