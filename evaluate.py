@@ -43,56 +43,64 @@ def search(index: str, query: Query, k: int) -> List[Any]:
     return response
 
 
+def _rerank_query(query_text: str, embed_methods: str, response: List[Any]) -> Query:
+    if embed_methods == "ft_vector":
+        encoder = EmbeddingClient(host="localhost", embedding_type="fasttext")
+    elif embed_methods == "sbert_vector":
+        encoder = EmbeddingClient(host="localhost", embedding_type="sbert")
+    elif embed_methods == "lf_vector":
+        encoder = EmbeddingClient(host="localhost", embedding_type="longformer")
+    else:
+        raise NotImplementedError(embed_methods)
+
+    query_vector = encoder.encode([query_text], pooling="mean").tolist()[
+        0
+    ]  # get the query embedding and convert it to a list
+
+    # q_vector: cosine similarity between the embeddings of query text and content text.
+    q_vector = generate_script_score_query(
+        query_vector, embed_methods
+    )  # custom query that scores documents based on cosine similarity
+
+    # get doc ids from response
+    q_match_ids = Ids(values=[hit.meta.id for hit in response])
+    # print(q_match_ids)
+    q_c = (
+            q_match_ids & q_vector
+    )  # compound query by using logic operators on retrieved ids and query vector
+
+    return q_c
+
+
 def get_response(index_name: str,
                  query_text: str,
                  custom_analyzer: bool,
                  embed_methods: str = "bm25",
-                 k: int = 20) -> List[Any]:
+                 k: int = 20,
+                 kw_query: str = "") -> List[Any]:
     reranking = False if embed_methods == "bm25" else True
 
-    # q_basic: default analyser or custom analyzer
-    q_basic = Match(
-        content={"query": query_text}
-    )  # a query that matches text in the content field of the index, using BM25 as default
+    # get top k query response
+    top_k_query = kw_query if kw_query else query_text
+    assert top_k_query
     if custom_analyzer:
         q_basic = Match(
-            custom_content={"query": query_text}
+            custom_content={"query": top_k_query}
         )
-
+    else:
+        # q_basic: default analyser or custom analyzer
+        q_basic = Match(
+            content={"query": top_k_query}
+        )  # a query that matches text in the content field of the index, using BM25 as default
     response = search(
         index_name, q_basic, k
     )  # search, change the query object to see different results
 
-    if reranking:
+    # rerank top k response
+    if reranking and query_text:
         # print(f"reranking using {embed_methods}")
         # embedding: fasttext or sentence bert
-
-        if embed_methods == "ft_vector":
-            encoder = EmbeddingClient(host="localhost", embedding_type="fasttext")
-        elif embed_methods == "sbert_vector":
-            encoder = EmbeddingClient(host="localhost", embedding_type="sbert")
-        elif embed_methods == "lf_vector":
-            encoder = EmbeddingClient(host="localhost", embedding_type="longformer")
-        else:
-            raise ValueError
-
-        query_vector = encoder.encode([query_text], pooling="mean").tolist()[
-            0
-        ]  # get the query embedding and convert it to a list
-        # print(len(query_vector))
-
-        # q_vector: cosine similarity between the embeddings of query text and content text.
-        q_vector = generate_script_score_query(
-            query_vector, embed_methods
-        )  # custom query that scores documents based on cosine similarity
-
-        # get doc ids from response
-        q_match_ids = Ids(values=[hit.meta.id for hit in response])
-        # print(q_match_ids)
-        q_c = (
-                q_match_ids & q_vector
-        )  # compound query by using logic operators on retrieved ids and query vector
-
+        q_c = _rerank_query(query_text, embed_methods, response)
         response = search(
             index_name, q_c, k,
         )  # re-ranking
@@ -100,7 +108,7 @@ def get_response(index_name: str,
     return response
 
 
-def get_score(response: List[Any], topic_id: str, k: int) -> float:
+def get_score(response: List[Any], topic_id: str, k: int) -> Score:
     # option 1
     # topic_rels = [f"{topic_id}-1", f"{topic_id}-2"]
     # relevance = [1 if hit.annotation in topic_rels else 0 for hit in response]
@@ -115,7 +123,7 @@ def get_score(response: List[Any], topic_id: str, k: int) -> float:
             relevance.append(0)
     # print(relevance)
     S = Score.eval(relevance, k)
-    return S.ndcg
+    return S
 
 
 def main():
@@ -175,9 +183,11 @@ def main():
                                  'str_content': hit.content})
 
     else:
-        ndcg_score = get_score(response, args.topic_id, k)
+        ndcg_score = get_score(response, args.topic_id, k).ndcg
         print(f"score of {args.query_type:11s}: {ndcg_score:.5f}")
 
 
 if __name__ == "__main__":
     main()
+    # TODO: DEBUG
+
