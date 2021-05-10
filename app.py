@@ -46,7 +46,7 @@ def results():
     print(option_analyzer)
     print(option_embed)
 
-    custom_analyzer = True if option_analyzer == "custom_analyzer" else False
+    custom_analyzer = (option_analyzer == "custom_analyzer")
 
     response = get_response(INDEX_NAME, query_text, custom_analyzer, option_embed, K, kw_query=keywords_text)
     storage[query_text][keywords_text] = response
