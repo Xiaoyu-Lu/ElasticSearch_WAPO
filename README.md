@@ -39,17 +39,18 @@ $ python load_es_index.py --index_name wapo_docs_50k_lf --wapo_path data/subset_
 #### Create Databases
 Make sure the code under ```if __name__=="__main__":``` in [db805.py](db805.py) or [db.py](db.py) is all uncommented before creating databases.
 
+Create wapo database from .jl file if you wish to see the full effect for all documents:
+    
+```shell
+$ python db.py 
+```
+
 Create wapo database for topic 805 from .jl file (which only takes ~1 min):
     
 ```shell
 $ python db805.py 
 ```
     
-Create wapo database from .jl file if you wish to see the full effect for all documents (not necessary for this final project):
-    
-```shell
-$ python db.py 
-```
 ### Setting up ElasticSearch Server
 If you haven't done so already, run the following command to start an ES server:
 ```shell
