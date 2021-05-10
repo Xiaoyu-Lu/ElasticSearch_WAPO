@@ -23,7 +23,8 @@
 <form action="{{ url_for('results') }}" name="search" method="post">
     <div style="padding-top: 15px; padding-left: 700px; text-align:left">
     <label for="query">Query:</label>
-    <input type="text" id="query" name="query" size=50 placeholder="Enter Keyword Here">
+    <input type="text" id="query" name="query" size=50 placeholder="Enter query here">
+        <input type="text" id="query" name="keywords" size=40 placeholder="Enter keywords here, separated by whitespaces">
     <input type="submit" value="Search">
     <br> <strong> Analyzer Selection: </strong>
     <input type="radio" name="options_analyzer" id="option1" value="basic_analyzer"  checked="checked" > Basic analyzer </input>
