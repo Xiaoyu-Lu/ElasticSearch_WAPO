@@ -11,7 +11,6 @@ from nltk.tokenize.treebank import TreebankWordDetokenizer
 from hyphenate import hyphenate_word
 import string
 
-THRES = 40
 PUNC = set(string.punctuation)
 lemmatizer = WordNetLemmatizer()
 detokenizer = TreebankWordDetokenizer()
