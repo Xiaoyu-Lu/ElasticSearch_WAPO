@@ -19,12 +19,12 @@
 </head>
 <body text="#1B4F72">
 
-<div style="padding: 10px 1000px 15px 300px;text-align: left">
+<div style="padding: 0.7% 52% 1% 14%;text-align: left;">
     <h1 style="color:#1B4F72">Washington Post Search</h1>
 </div>
 
 <form action="{{ url_for('results') }}" name="search" method="post">
-    <div style="padding-top: 15px; padding-left: 200px; padding-right: 1000px;text-align:left">
+    <div style="padding-top: 1%; padding-left: 10.4%; padding-right: 52%;text-align:left">
     <label for="query">Query:</label>
     <input type="text" id="query" name="query" size=50 value="{{ query_text }}">
     <input type="text" id="query" name="keywords" size=40 {% if kw_text %}
@@ -56,42 +56,42 @@
 </div>
 {% endif %}
 
-<h3 style="padding-left: 200px;">Total hits: {{ hits_num }}</h3>
+<h3 style="padding-left: 10.4%;">Total hits: {{ hits_num }}</h3>
 
-<div style="padding-left: 200px; padding-right: 1000px;">
+<div style="padding-left: 10.4%; padding-right: 52%">
 {% if page_id<page_num %}
     {% for i in range((page_id-1)*DOC_PER_PAGE, page_id*DOC_PER_PAGE) %}
-        <h3 style = "margin-bottom:10px; margin-top: 30px">  <a href={{ url_for('doc_data',doc_id=ids_list[i].meta.id) }}>
+        <h3 style = "margin-bottom:0.7%; margin-top: 2%">  <a href={{ url_for('doc_data',doc_id=ids_list[i].meta.id) }}>
             <strong>{{ items_list[i - (page_id-1)*DOC_PER_PAGE].title }}</strong> </a>
             {% if show_rel %}
                 <span>[{{ items_list[i - (page_id-1)*DOC_PER_PAGE].annotation }}]</span>
             {% endif %}
         </h3>
-       <p style="margin-top:10px; margin-bottom: 30px; line-height:1; text-align:justify;">  {{ items_list[i - (page_id-1)*DOC_PER_PAGE].date }}&nbsp-&nbsp{{ contents[ids_list[i].meta.id] |safe }} </p>
+       <p style="margin-top:0.7%; margin-bottom: 2%; line-height:1; text-align:justify;">  {{ items_list[i - (page_id-1)*DOC_PER_PAGE].date }}&nbsp-&nbsp{{ contents[ids_list[i].meta.id] |safe }} </p>
     {% endfor %}
 {% else %}
     {% for i in range((page_id-1)*DOC_PER_PAGE, hits_num) %}
-        <h3 style = "margin-bottom:5px">  <a href={{ url_for('doc_data',doc_id=ids_list[i].meta.id) }}>
+        <h3 style = "margin-bottom:0.35%">  <a href={{ url_for('doc_data',doc_id=ids_list[i].meta.id) }}>
             <strong>{{ items_list[i - (page_id-1)*DOC_PER_PAGE].title }}</strong> </a>
             {% if show_rel %}
                 <span>[{{ items_list[i - (page_id-1)*DOC_PER_PAGE].annotation }}]</span>
             {% endif %}
         </h3>
 
-        <p style = "margin-top:5px; line-height:1; text-align:justify;">  {{ items_list[i - (page_id-1)*DOC_PER_PAGE].date }}&nbsp-&nbsp{{ contents[ids_list[i].meta.id] |safe }} </p>
+        <p style = "margin-top:0.35%; line-height:1; text-align:justify;">  {{ items_list[i - (page_id-1)*DOC_PER_PAGE].date }}&nbsp-&nbsp{{ contents[ids_list[i].meta.id] |safe }} </p>
     {% endfor %}
 {% endif %}
 </div>
 
 {% if page_id>1 %}
     {% set new_page_id = page_id - 1 %}
-    <form style="float: left; padding-left: 200px;" action="{{ url_for('next_page', page_id=new_page_id) }}" method="post">
+    <form style="float: left; padding-left: 10.4%;" action="{{ url_for('next_page', page_id=new_page_id) }}" method="post">
         <input type="submit" value="Prev Page">
     </form>
 {% endif %}
 {% if page_id<page_num %}
     {% set new_page_id = page_id + 1 %}
-    <form style="float: right; padding-right: 1000px;" action="{{ url_for('next_page', page_id=new_page_id) }}" method="post">
+    <form style="float: right; padding-right: 52%;" action="{{ url_for('next_page', page_id=new_page_id) }}" method="post">
         <input type="submit" value="Next Page">
     </form>
 {% endif %}
