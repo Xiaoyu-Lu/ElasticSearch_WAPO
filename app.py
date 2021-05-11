@@ -33,6 +33,7 @@ def home():
 def results():
     global page_num, query_text, option_analyzer, option_embed, keywords_text, score
 
+    # read user input
     query_text = request.form["query"]
     keywords_text = request.form["keywords"]
     if query_text == "" and keywords_text == "":
@@ -48,6 +49,10 @@ def results():
 
     custom_analyzer = (option_analyzer == "custom_analyzer")
 
+    # if query text empty, no reranking (BM25); otherwise use specified embedding
+    option_embed = option_embed if query_text.strip() else "bm25"
+
+    # get response
     response = get_response(INDEX_NAME, query_text, custom_analyzer, option_embed, K, kw_query=keywords_text)
     storage[query_text][keywords_text] = response
     items = [hit for hit in response[: DOC_PER_PAGE]]
@@ -73,7 +78,7 @@ def next_page(page_id):
     return render_template("results.html", items_list=items, ids_list=response, page_id=page_id, page_num=page_num,
                            query_text=query_text, hits_num=len(response), start=(page_id - 1) * DOC_PER_PAGE + 1,
                            DOC_PER_PAGE=DOC_PER_PAGE, option_analyzer=option_analyzer, option_embed=option_embed,
-                           contents=contents, show_rel=show_rel, score=score)
+                           contents=contents, show_rel=show_rel, score=score, kw_text=keywords_text)
 
 
 # document page

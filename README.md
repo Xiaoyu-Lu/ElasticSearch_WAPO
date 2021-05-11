@@ -102,7 +102,7 @@ $ python -m embedding_service.server --embedding longformer --model allenai/long
     ```
   
 ## How to Search
-Our BM25 retrieval system defaults to using keyword text and falls back to query text if no keyword text is provided. 
+Our BM25 retrieval system defaults to using keyword text and falls back to query text if no keyword text is provided. If neither keyword nor query text is provided, the program will jump back to home page.
 
 Reranking will only be performed if query text is provided and reranking is based on query text only. 
 ### Case 1: Using both Query and Keywords
@@ -112,5 +112,7 @@ The top K results will be retrieved based on the query text and, if reranking, r
 
 This is the default behavior in PA5. 
 ### Case 3: Using Keywords Only
-The top K results will be retrieved based on the keyword text. Intuitively, no reranking will be performed even if a reranking method is specified.
+The top K results will be retrieved based on the keyword text. 
+
+Intuitively, no reranking will be performed even if a reranking method is specified. This means that if a user searches with only keywords and chooses fastText as the reranking method, the system will correct the reranking method to BM25 only (i.e. no reranking). 
 

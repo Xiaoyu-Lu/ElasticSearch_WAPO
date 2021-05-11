@@ -97,8 +97,9 @@ def get_response(index_name: str,
     )  # search, change the query object to see different results
 
     # rerank top k response
-    if reranking and query_text:
-        # print(f"reranking using {embed_methods}")
+    if reranking:
+        # rerank ONLY if query text is not empty prevent fasttext NaN score problem
+        assert query_text, f"Reranking with {embed_methods} can only happen if query text is not empty!"
         # embedding: fasttext or sentence bert
         q_c = _rerank_query(query_text, embed_methods, response)
         response = search(
