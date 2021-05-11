@@ -131,7 +131,7 @@ dmypy.json
 
 # Data
 data/subset_wapo_50k_sbert_ft_lf_filtered.jl
-
+data/*.db
 # Working_temp
 working/
 /test.sh
