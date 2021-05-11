@@ -18,9 +18,8 @@ from peewee import chunked
 from utils import get_word_dict, add_bold, get_seg, normalize_query
 import re
 from db import query_doc
-
-THRES = 40
-THRES_MAX = 50
+# from functools import cache #uncomment it if you are using python3.9+
+from hyperparas import THRES, THRES_MAX
 
 data_dir = Path("data")
 db_name = "docs805.db"
@@ -122,13 +121,14 @@ def load_wapo(wapo_jl_path: Union[str, os.PathLike]) -> Iterator[Dict]:
             idx += 1
 
 
+# @cache
 def embolden_text_805(query_text: str, doc_idx: int) -> str:
     """
     Embolden the keywords in query
     :param text:
     :return:
     """
-    print(f"doc_idx:{doc_idx}")
+    print(f"Embolden doc {doc_idx}")
 
     query_tokens = normalize_query(query_text)
     try:
@@ -159,15 +159,13 @@ def embolden_text_805(query_text: str, doc_idx: int) -> str:
 
     left, right, bos_i, eos_i = get_seg(seg_idx, breakpoints)
 
-    # absolute indices of candidates to be bold
-    bold_indices = breakpoints[left:right]
-
     # extract the text tokens from doc tokens
     l = seg_idx[bos_i] + 1 if bos_i else seg_idx[bos_i]  # begins after the end of sentence sign
     r = seg_idx[eos_i] + 1  # including the punc
 
     if THRES <= r - l < THRES_MAX:  # remain the same
         sent_pieces = doc_tokens_basic[l:r]
+        # absolute indices of candidates to be bold
         bold_indices = breakpoints[left:right]
         # get the relative indices of candidates to be bold
         relative_bold_indices = [idx - l for idx in bold_indices]  # - start of sentence index
