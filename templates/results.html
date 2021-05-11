@@ -32,13 +32,13 @@
     {% endif %} >
     <input type="submit" id="btn_search" value="Search"><button type="button" id="btn_lucky">I feel lucky!</button>
 
-    <br> <strong>Analyzer Selection: </strong>
+    <br> <strong>Analyzer: </strong>
     <input type="radio" name="options_analyzer" id="option1" value="basic_analyzer"
             {% if option_analyzer=="basic_analyzer" %} checked="checked" {% endif %}> Basic analyzer </input>
     <input type="radio" name="options_analyzer" id="option2" value="custom_analyzer"
             {% if option_analyzer=="custom_analyzer" %} checked="checked" {% endif %}> Custom analyzer </input>
 
-    <br> <strong>Embedding Selection:</strong>
+    <br> <strong>Embedding:</strong>
     <input type="radio" name="options_embed" id="option1" value="bm25" {% if option_embed=="bm25" %}
            checked="checked" {% endif %}> BM25 </input>
     <input type="radio" name="options_embed" id="option2" value="ft_vector" {% if option_embed=="ft_vector" %}
