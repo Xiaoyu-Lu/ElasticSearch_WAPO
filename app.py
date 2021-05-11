@@ -1,25 +1,17 @@
 import argparse
 from collections import defaultdict
-
 from flask import Flask, render_template, request
 from elasticsearch_dsl.connections import connections
 from elasticsearch import Elasticsearch
-
+from hyperparas import DOC_PER_PAGE, DEBUG_TOPIC_ID, INDEX_NAME, K, SHOW_REL
 from evaluate import get_response, get_score
 from db import query_doc
 from db805 import embolden_text_805
 
 app = Flask(__name__)
 es = Elasticsearch()
-DOC_PER_PAGE = 8
-K = 20  # less than or equal to: [10000]
-INDEX_NAME = "wapo_docs_50k_lf"
-DEBUG_TOPIC_ID = 805
-
 storage = defaultdict(dict)  # {query_text: {keyword_text: response}}
 connections.create_connection(hosts=["localhost"], timeout=100, alias="default")
-show_rel = False    # whether to show doc rel and score on result page
-
 
 
 # home page
@@ -59,12 +51,12 @@ def results():
 
     contents = {hit.meta.id: embolden_text_805(query_text, hit.meta.id) for hit in response[: DOC_PER_PAGE]}
     page_num = (len(response) - 1) // 8 + 1
-    score = get_score(response, str(DEBUG_TOPIC_ID), K) if show_rel else None
+    score = get_score(response, str(DEBUG_TOPIC_ID), K) if SHOW_REL else None
 
     return render_template("results.html", items_list=items, ids_list=response, page_id=1, page_num=page_num,
                            query_text=query_text, kw_text=keywords_text,
                            hits_num=len(response), start=1, DOC_PER_PAGE=DOC_PER_PAGE, option_analyzer=option_analyzer,
-                           option_embed=option_embed, contents=contents, show_rel=show_rel, score=score)
+                           option_embed=option_embed, contents=contents, show_rel=SHOW_REL, score=score)
 
 
 # "next page" to show more results
@@ -78,7 +70,7 @@ def next_page(page_id):
     return render_template("results.html", items_list=items, ids_list=response, page_id=page_id, page_num=page_num,
                            query_text=query_text, hits_num=len(response), start=(page_id - 1) * DOC_PER_PAGE + 1,
                            DOC_PER_PAGE=DOC_PER_PAGE, option_analyzer=option_analyzer, option_embed=option_embed,
-                           contents=contents, show_rel=show_rel, score=score, kw_text=keywords_text)
+                           contents=contents, show_rel=SHOW_REL, score=score, kw_text=keywords_text)
 
 
 # document page
@@ -97,6 +89,6 @@ if __name__ == "__main__":
                         help="If selected, result page shows annotation and evaluation scores")
     args = parser.parse_args()
 
-    show_rel = args.debug
+    SHOW_REL = args.debug
 
     app.run(debug=True, port=5000)
