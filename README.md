@@ -14,7 +14,7 @@ Here is a list of progress report, sorted by recency:
 2. [Second progress report](report/second-progress-report.pdf)
 3. [First progress report](report/first-progress-report.pdf)
 
-To request access to [our group project Drive folder](https://docs.google.com/presentation/d/1HTkCJlzAnj8yXIFBNF6eq5ENkHxQzlOOcpZ7FZK-RB0/edit?usp=sharing) containing all documentations and essential datasets, you'll need to contact one of the group members.
+To request access to [our group project Drive folder](https://drive.google.com/drive/u/1/folders/1tzpMxcXucRHe8GyKHFNX4gqzcEOQo3vN) containing all documentations and essential datasets, you'll need to contact one of the group members.
 
 ### TREC Topic Number
 In this project, we specifically examined the effect of our approaches on one of [TREC 2018 topics](https://trec.nist.gov/data/core/topics2018.txt), #805, which includes the following fields:
@@ -35,7 +35,7 @@ Relevant documents identify invasive species in the U.S. that can be eaten by hu
 ```
 
 ### Queries
-For more queries, see [our discussion in the final report](static/final-presentation.pdf).
+For more queries, see [our discussion in the final report](report/final-presentation.pdf).
 
 
 ## Output
@@ -59,7 +59,7 @@ For a detailed result discussion, see [our discussion in the final report](stati
 
 ## Dependencies and Build Instructions
 ### 1. Activate Environment
-This repository is Python-based, and **Python 3.8** is recommended.
+This repository is Python-based, and **Python 3.9** is recommended.
 
 *Remember to always activate your virtual environment first.* You can create a virtual environment using either [venv](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment) or [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-with-commands).
 
