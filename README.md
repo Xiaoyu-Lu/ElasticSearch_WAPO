@@ -14,7 +14,7 @@ Here is a list of progress report, sorted by recency:
 2. [Second progress report](static/second-progress-report.pdf)
 3. [First progress report](static/first-progress-report.pdf)
 
-To request access to [our group project Drive folder](https://docs.google.com/presentation/d/1HTkCJlzAnj8yXIFBNF6eq5ENkHxQzlOOcpZ7FZK-RB0/edit?usp=sharing) containing all code, documentations, and data, you'll need to contact one of the group members.
+To request access to [our group project Drive folder](https://docs.google.com/presentation/d/1HTkCJlzAnj8yXIFBNF6eq5ENkHxQzlOOcpZ7FZK-RB0/edit?usp=sharing) containing all documentations and essential datasets, you'll need to contact one of the group members.
 
 ### TREC Topic Number
 In this project, we specifically examined the effect of our approaches on one of [TREC 2018 topics](https://trec.nist.gov/data/core/topics2018.txt), #805, which includes the following fields:
@@ -86,8 +86,29 @@ cd elasticsearch-7.10.2/
 ./bin/elasticsearch
 ```
 
+#### Data Directory Structure
+
+Your [data/](data/) directory should contain the following files, so that you can run the system properly:
+
+```
+data
+├── docs50k_whole.db
+├── subset_wapo_50k_sbert_ft_lf_filtered.jl
+├── topics2018.xml
+└── wiki-news-300d-1M-subword.vec
+```
+
+You can download ```wiki-news-300d-1M-subword.vec``` at any time  [here](https://dl.fbaipublicfiles.com/fasttext/vectors-english/wiki-news-300d-1M-subword.vec.zip).
+
+After granted access by one of our team members, you can access:
+
+[docs50k_whole.db](https://drive.google.com/uc?export=download&id=1lfXuiI4oMj37p0_hbzS593LoQuy9zoZp): database for the keyword bolding algorithm
+
+[subset_wapo_50k_sbert_ft_lf_filtered.jl](https://drive.google.com/file/d/1h1LDoLRBgQgUJH5tbWuBlG-dparXy6f-/view?usp=sharing): JSON line file containing a subset of documents in TREC, including their sBERT, fastText, and Longformer vectors
+
 #### Build Index
-First, obtain our .jl dataset, [subset_wapo_50k_sbert_ft_lf_filtered.jl](https://drive.google.com/file/d/1h1LDoLRBgQgUJH5tbWuBlG-dparXy6f-/view?usp=sharing) (you'll need to contact the group members to access this file), and put it under ```data/```.
+
+First, make sure you have obtained our .jl dataset, [subset_wapo_50k_sbert_ft_lf_filtered.jl](https://drive.google.com/file/d/1h1LDoLRBgQgUJH5tbWuBlG-dparXy6f-/view?usp=sharing) (you'll need to contact the group members to access this file), and put it under ```data/```.
 > Note: to access the code for creating and appending Longformer vectors to the original .jl file, see [longformer_vectorization](longformer_vectorization/).
 
 Then, to load wapo docs into the index called "wapo_docs_50k_lf", run:
@@ -106,9 +127,10 @@ You need to click [here](https://drive.google.com/uc?export=download&id=1lfXuiI4
 
 Or you can create the database by running  `$ python db.py ` to get a tast of the time it takes (~1 hour) to build db from all documents.
 
-​	- Make sure the code under ```if __name__=="__main__":``` in  [db.py](db.py) is all uncommented before creating databases.
+	- Make sure the code under ```if __name__=="__main__":``` in  [db.py](db.py) is all uncommented before creating databases.
 
 ### 3. Setting up ElasticSearch Server
+
 If you haven't done so already, run the following command to start an ES server:
 ```shell script
 cd elasticsearch-7.10.2/
