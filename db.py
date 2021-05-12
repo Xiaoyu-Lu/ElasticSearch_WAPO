@@ -6,17 +6,23 @@ Created on Tue April 20 2021
 @author: Xiaoyu
 """
 from pathlib import Path
-from typing import Any
 from playhouse.shortcuts import model_to_dict
 from peewee import SqliteDatabase, Model  # type: ignore
 from peewee import IntegerField, CharField, DateTimeField, TextField  # type: ignore
-from typing import Dict, Union, Iterator, List
+from typing import Dict, Union, Iterator, List, Any
 import os
 import json
+import nltk
+import bisect
 from peewee import chunked
+from utils import get_word_dict, add_bold, get_seg, normalize_query
+import re
+from functools import cache
+from hyperparas import THRES, THRES_MAX
+from collections import defaultdict
 
 data_dir = Path("data")
-db_name = "docs50k.db"
+db_name = "docs50k_whole.db"
 db_path = data_dir.joinpath(db_name)
 wapo_jl_path = data_dir.joinpath("subset_wapo_50k_sbert_ft_lf_filtered.jl")
 
@@ -53,6 +59,7 @@ class Doc(BaseModel):
     annotation = CharField()
     published_date = DateTimeField(formats='%Y/%m/%d')
     content_str = TextField()
+    words_dict = TextField()
 
 
 @db.connection_context()
@@ -107,10 +114,71 @@ def load_wapo(wapo_jl_path: Union[str, os.PathLike]) -> Iterator[Dict]:
                    "author": data["author"],
                    "annotation": data["annotation"],  # could be empty string
                    "published_date": data["published_date"],
-                   "content_str": data['content_str']
+                   "content_str": data['content_str'],
+                   "words_dict": get_word_dict(data["content_str"])
                    }
             yield val
+
             idx += 1
+
+
+@cache
+def embolden_text(query_text: str, doc_idx: int) -> str:
+    """
+    Embolden the keywords in query
+    :param text:
+    :return:
+    """
+    print(f"Embolden doc {doc_idx}")
+
+    query_tokens = normalize_query(query_text)
+    try:
+        # database whole, select the word_idx_dict
+        doc_dict: Dict[str, Any] = query_doc(doc_idx)
+        doc: str = doc_dict["content_str"]
+        doc_tokens_basic: List[str] = nltk.word_tokenize(doc)
+        words_dict: str = doc_dict["words_dict"]
+        word_idx_dict = eval(re.sub(r"<class '(\w+)'>", r'\1', words_dict))
+    except:
+        raise KeyError
+
+    n = len(doc_tokens_basic)
+    seg_idx = word_idx_dict["eos_sign"]
+    seg_idx.add(0)  # for computation convenience
+    seg_idx.add(n - 1)
+    seg_idx = sorted(seg_idx)
+
+    # indices of candidates that can be bold
+    res = set()
+    for token in query_tokens:
+        res = res.union(word_idx_dict[token])
+    breakpoints = sorted(res)
+
+    left, right, bos_i, eos_i = get_seg(seg_idx, breakpoints)
+
+    # extract the text tokens from doc tokens
+    l = seg_idx[bos_i] + 1 if bos_i else seg_idx[bos_i]  # begins after the end of sentence sign
+    r = seg_idx[eos_i] + 1  # including the punc
+
+    if THRES <= r - l < THRES_MAX:  # remain the same
+        sent_pieces = doc_tokens_basic[l:r]
+        # absolute indices of candidates to be bold
+        bold_indices = breakpoints[left:right]
+        # get the relative indices of candidates to be bold
+        relative_bold_indices = [idx - l for idx in bold_indices]  # - start of sentence index
+        return add_bold(sent_pieces, relative_bold_indices)
+    elif r - l < THRES:  # add more tokens
+        sent_pieces = doc_tokens_basic[l: THRES + l + 1]  # r + (THRES-(r-l))
+        right_extend = bisect.bisect_right(breakpoints, THRES + l)
+        bold_indices = breakpoints[left:right_extend]
+        relative_bold_indices = [idx - l for idx in bold_indices]
+        return add_bold(sent_pieces, relative_bold_indices) + " ..."
+    else:  # truncate
+        sent_pieces = doc_tokens_basic[l:l + THRES_MAX + 1]
+        right_shrink = bisect.bisect(breakpoints, l + THRES_MAX)
+        bold_indices = breakpoints[left:right_shrink]
+        relative_bold_indices = [idx - l for idx in bold_indices]
+        return add_bold(sent_pieces, relative_bold_indices) + " ..."
 
 
 if __name__ == "__main__":
@@ -128,3 +196,4 @@ if __name__ == "__main__":
     # print("Done...")
     # for i in range(10):
     #     print(query_doc(i))
+
