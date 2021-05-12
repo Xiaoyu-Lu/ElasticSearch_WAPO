@@ -47,15 +47,15 @@ $ python db.py
 
 Create wapo database for topic 805 from .jl file (which only takes ~1 min):
     
-```shell
-$ python db805.py 
+```shell script
+python db805.py 
 ```
     
 ### Setting up ElasticSearch Server
 If you haven't done so already, run the following command to start an ES server:
-```shell
-$ cd elasticsearch-7.10.2/
-$ ./bin/elasticsearch
+```shell script
+cd elasticsearch-7.10.2/
+./bin/elasticsearch
 ```
 
 ### Setting up Embedding Servers
@@ -64,20 +64,20 @@ You need to download the pretrained fastText embedding on wiki news and put it i
 
 - Load fasttext model (download for the first time):
 
-```shell
-$ python -m embedding_service.server --embedding fasttext  --model data/wiki-news-300d-1M-subword.vec
+```shell script
+python -m embedding_service.server --embedding fasttext  --model data/wiki-news-300d-1M-subword.vec
 ```
 
 - Load sbert model:
 
-```shell
-$ python -m embedding_service.server --embedding sbert --model msmarco-distilbert-base-v3
+```shell script
+python -m embedding_service.server --embedding sbert --model msmarco-distilbert-base-v3
 ```
 
 - Load longformer model (download for the first time):
 
-```shell
-$ python -m embedding_service.server --embedding longformer --model allenai/longformer-base-4096
+```shell script
+python -m embedding_service.server --embedding longformer --model allenai/longformer-base-4096
 ```
 
 
@@ -93,12 +93,12 @@ $ python -m embedding_service.server --embedding longformer --model allenai/long
 
     Run the app, then type http://127.0.0.1:5000/ in the browser to view the web application.
     
-    ```shell
-    $ python app.py 
+    ```shell script
+    python app.py 
     ```
     If you'd like to see scores for Topic 805 and annotations on the result page, run
-    ```shell
-    $ python app.py --debug 
+    ```shell script
+    python app.py --debug 
     ```
   
 ## How to Search
