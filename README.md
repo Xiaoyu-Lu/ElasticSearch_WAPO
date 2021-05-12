@@ -7,7 +7,7 @@ Team members: Yonglin Wang,  Xiaoyu Lu, Yun-Jing Lee, Ruobin Hu
 Team member submitting code:
 
 ### Project Summary
-In this TREC-based information retrieval project, we experimented with query expansion, Longformer embedding, keyword bolding, and web UI improvements.
+In this TREC-based information retrieval project, we experimented with computer-assisted query expansion, reranking with Longformer embedding, keyword bolding, and web UI improvements. This project is built based on a ES system we previously developed in class, which uses BM25 and custom analyzer for document retrieval and fastText and sBERT embedding for reranking. 
 
 Here is a list of progress report, sorted by recency:
 1. [Final project report](static/final-presentation.pdf)
@@ -63,15 +63,15 @@ This repository is Python-based, and **Python 3.8** is recommended.
 
 *Remember to always activate your virtual environment first.* You can create a virtual environment using either [venv](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment) or [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-with-commands).
 
-### First-time Running
+### 2. First-time Running
 The required packages are listed in [requirements.txt](requirements.txt).
 
 Run the following subsections only once, when you set up the project for the first time.
-#### Install Dependencies
+#### 2.1 Install Dependencies
 ```shell script
 pip install -r requirements.txt
 ```
-#### Setting up ElasticSearch Server
+#### 2.2 Set up ElasticSearch Server
 
 After you install elasticsearch-dsl-py package, add the following code at the end of `elasticsearch_dsl/query.py`:
 ```python
@@ -86,7 +86,7 @@ cd elasticsearch-7.10.2/
 ./bin/elasticsearch
 ```
 
-#### Data Directory Structure
+#### 2.3 Download all Data
 
 Your [data/](data/) directory should contain the following files, so that you can run the system properly:
 
@@ -106,28 +106,36 @@ After granted access by one of our team members, you can access:
 
 [subset_wapo_50k_sbert_ft_lf_filtered.jl](https://drive.google.com/file/d/1h1LDoLRBgQgUJH5tbWuBlG-dparXy6f-/view?usp=sharing): JSON line file containing a subset of documents in TREC, including their sBERT, fastText, and Longformer vectors
 
-#### Build Index
+#### 2.4 Build Index
 
-First, make sure you have obtained our .jl dataset, [subset_wapo_50k_sbert_ft_lf_filtered.jl](https://drive.google.com/file/d/1h1LDoLRBgQgUJH5tbWuBlG-dparXy6f-/view?usp=sharing) (you'll need to contact the group members to access this file), and put it under ```data/```.
-> Note: to access the code for creating and appending Longformer vectors to the original .jl file, see [longformer_vectorization](longformer_vectorization/).
-
-Then, to load wapo docs into the index called "wapo_docs_50k_lf", run:
+To load wapo docs into the index called "wapo_docs_50k_lf", run:
 ```shell script
 python load_es_index.py --index_name wapo_docs_50k_lf --wapo_path data/subset_wapo_50k_sbert_ft_lf_filtered.jl
 ```
 
+#### 2.5 Notes on Creating the datasets
 
-#### 2.4 Download Database
+This is just for documentation purpose. You **DO NOT** need to run the code described here, since your ```data/``` directory should have the datasets already by now. 
 
-Create wapo database from .jl file if you wish to see the full effect for all documents:
-```shell script
-python db.py 
-```
-You need to click [here](https://drive.google.com/uc?export=download&id=1lfXuiI4oMj37p0_hbzS593LoQuy9zoZp) to download the prebuilt database first. 
+1. **Dataset**: ```subset_wapo_50k_sbert_ft_lf_filtered.jl``` 
 
-Or you can create the database by running  `$ python db.py ` to get a tast of the time it takes (~1 hour) to build db from all documents.
+   **Code for creating**:  [longformer_vectorization](longformer_vectorization/)
 
-	- Make sure the code under ```if __name__=="__main__":``` in  [db.py](db.py) is all uncommented before creating databases.
+   **Instructions**: see [longformer_vectorization](longformer_vectorization/); GPU resources are recommended.
+
+2. **Dataset**: ```docs50k_whole.db``` 
+
+   **Code for creating**: [db.py](db.py)
+
+   **Instructions**:
+
+   To get a taste of the time it takes (~1 hour) to build db from all documents, you can create the database by running 
+
+   ```shell
+   python db.py
+   ```
+
+   Make sure the code under ```if __name__=="__main__":``` in  [db.py](db.py) is all uncommented before creating databases.
 
 ### 3. Setting up ElasticSearch Server
 
@@ -179,7 +187,7 @@ python -m embedding_service.server --embedding longformer --model allenai/longfo
     python app.py --debug 
     ```
 
-## How to Search
+## How to Use the Search System
 Our BM25 retrieval system defaults to using keyword text and falls back to query text if no keyword text is provided. If neither keyword nor query text is provided, the program will jump back to home page.
 
 Reranking will only be performed if query text is provided and reranking is based on query text only. 
