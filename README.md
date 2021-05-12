@@ -11,8 +11,8 @@ Team members: Yonglin Wang,  Xiaoyu Lu, Yun-jing Lee, Ruobin Hu
 ### First-time Running
 Run the following subsections only once, when you set up the project for the first time.
 #### Install Dependencies
-```
-$ pip install -r requirements.txt
+```shell script
+pip install -r requirements.txt
 ```
 #### Setting up ElasticSearch Server
 
@@ -24,16 +24,15 @@ class ScriptScore(Query):
 ```
 Download ES from https://www.elastic.co/downloads/past-releases#elasticsearch. Make sure you are choosing Elasticsearch 7.10.2 (used for scoring the assignment). To start the ES engine:
 
-```shell
-$ cd elasticsearch-7.10.2/
-$ ./bin/elasticsearch
+```shell script
+cd elasticsearch-7.10.2/
+./bin/elasticsearch
 ```
 
 #### Build Index
-    
-```shell
-# load wapo docs into the index called "wapo_docs_50k_lf"
-$ python load_es_index.py --index_name wapo_docs_50k_lf --wapo_path data/subset_wapo_50k_sbert_ft_lf_filtered.jl
+To load wapo docs into the index called "wapo_docs_50k_lf", run:
+```shell script
+python load_es_index.py --index_name wapo_docs_50k_lf --wapo_path data/subset_wapo_50k_sbert_ft_lf_filtered.jl
 ```
 
 #### Create Databases
@@ -41,8 +40,8 @@ Make sure the code under ```if __name__=="__main__":``` in [db805.py](db805.py) 
 
 Create wapo database from .jl file if you wish to see the full effect for all documents:
     
-```shell
-$ python db.py 
+```shell script
+python db.py 
 ```
 
 Create wapo database for topic 805 from .jl file (which only takes ~1 min):
@@ -86,7 +85,7 @@ python -m embedding_service.server --embedding longformer --model allenai/longfo
 - For Evaluation: 
     Change ```TOPIC_ID``` to the topic ID you want to evaluate.
     ```shell
-    $ sh scirpts.sh
+    sh scirpts.sh
     ```
 
 - For web app:
