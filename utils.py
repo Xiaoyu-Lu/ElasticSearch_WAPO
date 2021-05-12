@@ -130,7 +130,7 @@ def get_seg(seg_idx: List[int], breakpoints: List[int]) -> Tuple[Union[int, Any]
 def add_bold(sent_pieces: List[str], bold_indices: List[int]) -> str:
     """Untokenize a sentence with bold tags"""
     for idx in bold_indices[::-1]:
-        sent_pieces[idx] = "<b>" + sent_pieces[idx] + "</b>"
+        sent_pieces[idx] = "<strong>" + sent_pieces[idx] + "</strong>"
     return detokenizer.detokenize(sent_pieces)
 
 
