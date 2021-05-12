@@ -1,5 +1,5 @@
-# ElasticSearch_WAPO
-COSI 132a Final Project
+# ElasticSearch on TREC: Eating Invasive Species
+This repository is for the final project of COSI 132A, Information Retrieval. 
 
 ## Basic Information
 Team members: Yonglin Wang,  Xiaoyu Lu, Yun-Jing Lee, Ruobin Hu
@@ -60,7 +60,7 @@ For a detailed result discussion, see [our discussion in the final report](stati
 ## Dependencies and Build Instructions
 ### 1. Activate Environment
 This repository is Python-based, and **Python 3.8** is recommended.
- 
+
 *Remember to always activate your virtual environment first.* You can create a virtual environment using either [venv](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment) or [conda](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#creating-an-environment-with-commands).
 
 ### First-time Running
@@ -88,7 +88,7 @@ cd elasticsearch-7.10.2/
 
 #### Build Index
 First, obtain our .jl dataset, [subset_wapo_50k_sbert_ft_lf_filtered.jl](https://drive.google.com/file/d/1h1LDoLRBgQgUJH5tbWuBlG-dparXy6f-/view?usp=sharing) (you'll need to contact the group members to access this file), and put it under ```data/```.
-> To access the code for creating and appending Longformer vectors to the original .jl file, see [longformer_vectorization](longformer_vectorization/).
+> Note: to access the code for creating and appending Longformer vectors to the original .jl file, see [longformer_vectorization](longformer_vectorization/).
 
 Then, to load wapo docs into the index called "wapo_docs_50k_lf", run:
 ```shell script
@@ -99,7 +99,6 @@ python load_es_index.py --index_name wapo_docs_50k_lf --wapo_path data/subset_wa
 #### 2.4 Download Database
 
 Create wapo database from .jl file if you wish to see the full effect for all documents:
-    
 ```shell script
 python db.py 
 ```
@@ -174,14 +173,13 @@ The top K results will be retrieved based on the keyword text.
 Intuitively, no reranking will be performed even if a reranking method is specified. This means that if a user searches with only keywords and chooses fastText as the reranking method, the system will correct the reranking method to BM25 only (i.e. no reranking). 
 
 ## Team Member Contribution
-This amazing project cannot be put together without the contribution of each group member!
-The order below corresponds to the order in which we speak in our final presentation. 
+This amazing project cannot be put together without the contribution of each group member! The order below corresponds to the order in which we speak in our final presentation. 
 
-Yonglin: Longformer, query expansion, keyword search
+**Yonglin**: Longformer, query expansion, keyword search
 
-Yun-Jing: corpus-wide and topic-level data analysis
+**Yun-Jing**: corpus-wide and topic-level data analysis
 
-Ruobin: Web UI, CSS styling
+**Ruobin**: web UI, on call CSS styling
 
-Xiaoyu: Text bolding algorithm
+**Xiaoyu**: text bolding algorithm, database
 
