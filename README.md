@@ -36,7 +36,7 @@ $ ./bin/elasticsearch
 $ python load_es_index.py --index_name wapo_docs_50k_lf --wapo_path data/subset_wapo_50k_sbert_ft_lf_filtered.jl
 ```
 
-#### 2.4 Download Databases
+#### 2.4 Download Database
 
 You need to click [here](https://drive.google.com/uc?export=download&id=1lfXuiI4oMj37p0_hbzS593LoQuy9zoZp) to download the prebuilt database first. 
 
