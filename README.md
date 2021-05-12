@@ -5,16 +5,16 @@ Team members: Yonglin Wang,  Xiaoyu Lu, Yun-jing Lee, Ruobin Hu
 
 
 ## How to Run the Code
-### Activate Environment
+### 1. Activate Environment
 *Remember to always activate your virtual environment first.*
 
-### First-time Running
+### 2. First-time Running
 Run the following subsections only once, when you set up the project for the first time.
-#### Install Dependencies
+#### 2.1 Install Dependencies
 ```
 $ pip install -r requirements.txt
 ```
-#### Setting up ElasticSearch Server
+#### 2.2 Setting up ElasticSearch Server
 
 After you install elasticsearch-dsl-py package, add the following code at the end of `elasticsearch_dsl/query.py`:
 ```python
@@ -29,40 +29,33 @@ $ cd elasticsearch-7.10.2/
 $ ./bin/elasticsearch
 ```
 
-#### Build Index
-    
+#### 2.3 Build Index
+
 ```shell
 # load wapo docs into the index called "wapo_docs_50k_lf"
 $ python load_es_index.py --index_name wapo_docs_50k_lf --wapo_path data/subset_wapo_50k_sbert_ft_lf_filtered.jl
 ```
 
-#### Create Databases
-Make sure the code under ```if __name__=="__main__":``` in [db805.py](db805.py) or [db.py](db.py) is all uncommented before creating databases.
+#### 2.4 Download Databases
 
-Create wapo database from .jl file if you wish to see the full effect for all documents:
-    
-```shell
-$ python db.py 
-```
+You need to click [here](https://drive.google.com/uc?export=download&id=1lfXuiI4oMj37p0_hbzS593LoQuy9zoZp) to download the prebuilt database first. 
 
-Create wapo database for topic 805 from .jl file (which only takes ~1 min):
-    
-```shell script
-python db805.py 
-```
-    
-### Setting up ElasticSearch Server
+Or you can create the database by running  `$ python db.py ` to get a tast of the time it takes (~1 hour) to build db from all documents.
+
+​	- Make sure the code under ```if __name__=="__main__":``` in  [db.py](db.py) is all uncommented before creating databases.
+
+### 3. Setting up ElasticSearch Server
 If you haven't done so already, run the following command to start an ES server:
 ```shell script
 cd elasticsearch-7.10.2/
 ./bin/elasticsearch
 ```
 
-### Setting up Embedding Servers
+### 4. Setting up Embedding Servers
 
-You need to download the pretrained fastText embedding on wiki news and put it into data/ folder. You can click [this](https://dl.fbaipublicfiles.com/fasttext/vectors-english/wiki-news-300d-1M-subword.vec.zip) link to download. You don’t need to download any pretrained model for sentence transformers, it will be loaded the first time it's called.
+You don’t need to download any pretrained model for sentence transformers, it will be loaded the first time it's called.
 
-- Load fasttext model (download for the first time):
+- Load fasttext model (click [this](https://dl.fbaipublicfiles.com/fasttext/vectors-english/wiki-news-300d-1M-subword.vec.zip) link to download `.vec` file first,  then put it into `data/` folder):
 
 ```shell script
 python -m embedding_service.server --embedding fasttext  --model data/wiki-news-300d-1M-subword.vec
@@ -81,7 +74,7 @@ python -m embedding_service.server --embedding longformer --model allenai/longfo
 ```
 
 
-### Running the Programs
+### 5. Running the Programs
 
 - For Evaluation: 
     Change ```TOPIC_ID``` to the topic ID you want to evaluate.
@@ -100,7 +93,7 @@ python -m embedding_service.server --embedding longformer --model allenai/longfo
     ```shell script
     python app.py --debug 
     ```
-  
+
 ## How to Search
 Our BM25 retrieval system defaults to using keyword text and falls back to query text if no keyword text is provided. If neither keyword nor query text is provided, the program will jump back to home page.
 
