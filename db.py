@@ -17,7 +17,7 @@ import bisect
 from peewee import chunked
 from utils import get_word_dict, add_bold, get_seg, normalize_query
 import re
-# from functools import cache
+from functools import cache
 from hyperparas import THRES, THRES_MAX
 from collections import defaultdict
 
@@ -122,7 +122,7 @@ def load_wapo(wapo_jl_path: Union[str, os.PathLike]) -> Iterator[Dict]:
             idx += 1
 
 
-# @cache
+@cache
 def embolden_text(query_text: str, doc_idx: int) -> str:
     """
     Embolden the keywords in query
