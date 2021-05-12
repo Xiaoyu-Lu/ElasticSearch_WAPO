@@ -10,9 +10,9 @@ Team member submitting code:
 In this TREC-based information retrieval project, we experimented with computer-assisted query expansion, reranking with Longformer embedding, keyword bolding, and web UI improvements. This project is built based on a ES system we previously developed in class, which uses BM25 and custom analyzer for document retrieval and fastText and sBERT embedding for reranking. 
 
 Here is a list of progress report, sorted by recency:
-1. [Final project report](static/final-presentation.pdf)
-2. [Second progress report](static/second-progress-report.pdf)
-3. [First progress report](static/first-progress-report.pdf)
+1. [Final project report](report/final-presentation.pdf)
+2. [Second progress report](report/second-progress-report.pdf)
+3. [First progress report](report/first-progress-report.pdf)
 
 To request access to [our group project Drive folder](https://docs.google.com/presentation/d/1HTkCJlzAnj8yXIFBNF6eq5ENkHxQzlOOcpZ7FZK-RB0/edit?usp=sharing) containing all documentations and essential datasets, you'll need to contact one of the group members.
 
