@@ -5,7 +5,8 @@ from elasticsearch_dsl.connections import connections
 from elasticsearch import Elasticsearch
 from hyperparas import DOC_PER_PAGE, DEBUG_TOPIC_ID, INDEX_NAME, K, SHOW_REL
 from evaluate import get_response, get_score
-from db import query_doc, embolden_text
+from db import query_doc
+from db805 import embolden_text_805
 
 app = Flask(__name__)
 es = Elasticsearch()
@@ -48,7 +49,7 @@ def results():
     storage[query_text][keywords_text] = response
     items = [hit for hit in response[: DOC_PER_PAGE]]
 
-    contents = {hit.meta.id: embolden_text(query_text, hit.meta.id) for hit in response[: DOC_PER_PAGE]}
+    contents = {hit.meta.id: embolden_text_805(query_text, hit.meta.id) for hit in response[: DOC_PER_PAGE]}
     page_num = (len(response) - 1) // 8 + 1
     score = get_score(response, str(DEBUG_TOPIC_ID), K) if SHOW_REL else None
 
@@ -63,7 +64,7 @@ def results():
 def next_page(page_id):
     response = storage[query_text][keywords_text]  # Get the response from dict - the storage
     items = [hit for hit in response[(page_id - 1) * DOC_PER_PAGE: page_id * DOC_PER_PAGE]]
-    contents = {hit.meta.id: embolden_text(query_text, hit.meta.id) for hit in
+    contents = {hit.meta.id: embolden_text_805(query_text, hit.meta.id) for hit in
                 response[(page_id - 1) * DOC_PER_PAGE: page_id * DOC_PER_PAGE]}
 
     return render_template("results.html", items_list=items, ids_list=response, page_id=page_id, page_num=page_num,
