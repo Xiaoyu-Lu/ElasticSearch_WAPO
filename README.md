@@ -2,7 +2,8 @@
 COSI 132a Final Project
 
 ## Basic Information
-Team members: Yonglin Wang,  Xiaoyu Lu, Yun-jing Lee, Ruobin Hu
+Team members: Yonglin Wang,  Xiaoyu Lu, Yun-Jing Lee, Ruobin Hu
+
 Team member submitting code:
 
 ### Project Summary
@@ -87,7 +88,7 @@ cd elasticsearch-7.10.2/
 
 #### Build Index
 First, obtain our .jl dataset, [subset_wapo_50k_sbert_ft_lf_filtered.jl](https://drive.google.com/file/d/1h1LDoLRBgQgUJH5tbWuBlG-dparXy6f-/view?usp=sharing) (you'll need to contact the group members to access this file), and put it under ```data/```.
-> To access the code for creating appending Longformer vectors to the original .jl file, see [longformer_vectorization](longformer_vectorization/README.md).
+> To access the code for creating and appending Longformer vectors to the original .jl file, see [longformer_vectorization](longformer_vectorization/).
 
 Then, to load wapo docs into the index called "wapo_docs_50k_lf", run:
 ```shell script
@@ -177,7 +178,10 @@ This amazing project cannot be put together without the contribution of each gro
 The order below corresponds to the order in which we speak in our final presentation. 
 
 Yonglin: Longformer, query expansion, keyword search
-Yun-jing: corpus-wide and topic-level data analysis
+
+Yun-Jing: corpus-wide and topic-level data analysis
+
 Ruobin: Web UI, CSS styling
+
 Xiaoyu: Text bolding algorithm
 
