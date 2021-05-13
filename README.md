@@ -4,7 +4,7 @@ This repository is for the final project of COSI 132A, Information Retrieval.
 ## Basic Information
 Team members: Yonglin Wang,  Xiaoyu Lu, Yun-Jing Lee, Ruobin Hu
 
-Team member submitting code:
+Team member submitting code: Xiaoyu Lu
 
 ### Project Summary
 In this TREC-based information retrieval project, we experimented with computer-assisted query expansion, reranking with Longformer embedding, keyword bolding, and web UI improvements. This project is built based on a ES system we previously developed in class, which uses BM25 and custom analyzer for document retrieval and fastText and sBERT embedding for reranking. 
