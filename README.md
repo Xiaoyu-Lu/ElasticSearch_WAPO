@@ -34,11 +34,30 @@ Relevant documents identify invasive species in the U.S. that can be eaten by hu
 </top>
 ```
 
-### Queries
+## Queries
+#### Queries used in term expansion
+
+Each query below builds on the previous one; additional terms are underlined.
+
+- **Default Title**: eating invasive species
+
+- **Wiki** (adding Wikipedia species expansion): eating invasive species <u>Kudzu Zebra mussel Asian carp Snakehead Giant African land snail Lionfish</u>
+- **Wiki + Cook**: eating <u>cooking</u> invasive species Kudzu Zebra mussel Asian carp Snakehead Giant African land snail Lionfish
+- **Wiki + Cook + NL (Natural Langauge)**: eating <u>and</u> cooking invasive species <u>such as</u> Kudzu Zebra mussel Asian carp Snakehead Giant African land snail <u>and</u> Lionfish
+
 For more queries, see [our discussion in the final report](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/main/report/final-presentation.pdf).
 
-
 ## Output
+
+#### Queries used in term expansion
+
+In the following table, we can see that each new technique proposed brings improvement in two or all of the scores. 
+
+| Score Type | Wiki + Cook + NL rerank | Wiki + Cook | Wiki  | PA Best (Default Title) |
+| ---------- | ----------------------- | ----------- | ----- | ----------------------- |
+| AP         | 0.837                   | 0.772       | 0.659 | 0.533                   |
+| Precision  | 0.5                     | 0.5         | 0.45  | 0.35                    |
+| NDCG@20    | 0.917                   | 0.836       | 0.772 | 0.695                   |
 
 
 
