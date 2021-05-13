@@ -73,6 +73,10 @@ The result for our Web UI Result Page:
 
 ![Web UI](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/d91800926a3c595f0ca125f1bf798e40386cf6b1/report/IMGS/Web%20UI%20result.png)
 
+The result for our Web UI Result Page with Debug Mode:
+
+![Web UI](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/9fc214f0cde1622d7bbff1209d2b83f0f3fc1fc1/report/IMGS/Web-Result-Page-Debug-Mode.png)
+
 The result for our Web UI Doc Page:
 
 ![Web UI](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/acf0f27cc3eac3e54786208037633a4fd07adbfb/report/IMGS/Web-Doc-Page.png)
