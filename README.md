@@ -61,6 +61,23 @@ In the following table, we can see that each new technique proposed brings impro
 
 
 
+The result for our Average Precision on Title:
+
+![Average Precision on Title](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/d91800926a3c595f0ca125f1bf798e40386cf6b1/report/IMGS/Average%20Precision%20on%20Title.png)
+
+The result for our Web UI Home Page:
+
+![Web UI](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/ef18a2d9b1675aee1f23a6f35a12b9a6e5160548/report/IMGS/Web-Home-Page.png)
+
+The result for our Web UI Result Page:
+
+![Web UI](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/d91800926a3c595f0ca125f1bf798e40386cf6b1/report/IMGS/Web%20UI%20result.png)
+
+The result for our Web UI Doc Page:
+
+![Web UI](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/acf0f27cc3eac3e54786208037633a4fd07adbfb/report/IMGS/Web-Doc-Page.png)
+
+
 ## Results
 For a detailed result discussion, see [our discussion in the final report](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/main/report/final-presentation.pdf).
 
