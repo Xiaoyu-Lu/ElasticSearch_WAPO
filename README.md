@@ -43,7 +43,7 @@ For more queries, see [our discussion in the final report](report/final-presenta
 
 
 ## Results
-For a detailed result discussion, see [our discussion in the final report](static/final-presentation.pdf).
+For a detailed result discussion, see [our discussion in the final report](report/final-presentation.pdf).
 
 ### Retrieval Approaches
 * Taking intersections on Wikipedia data helps narrow down keywords
