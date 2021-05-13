@@ -10,9 +10,9 @@ Team member submitting code:
 In this TREC-based information retrieval project, we experimented with computer-assisted query expansion, reranking with Longformer embedding, keyword bolding, and web UI improvements. This project is built based on a ES system we previously developed in class, which uses BM25 and custom analyzer for document retrieval and fastText and sBERT embedding for reranking. 
 
 Here is a list of progress report, sorted by recency:
-1. [Final project report](report/final-presentation.pdf)
-2. [Second progress report](report/second-progress-report.pdf)
-3. [First progress report](report/first-progress-report.pdf)
+1. [Final project report](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/main/report/final-presentation.pdf)
+2. [Second progress report](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/main/report/second-progress-report.pdf)
+3. [First progress report](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/main/report/first-progress-report.pdf)
 
 To request access to [our group project Drive folder](https://drive.google.com/drive/u/1/folders/1tzpMxcXucRHe8GyKHFNX4gqzcEOQo3vN) containing all documentations and essential datasets, you'll need to contact one of the group members.
 
@@ -35,7 +35,7 @@ Relevant documents identify invasive species in the U.S. that can be eaten by hu
 ```
 
 ### Queries
-For more queries, see [our discussion in the final report](report/final-presentation.pdf).
+For more queries, see [our discussion in the final report](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/main/report/final-presentation.pdf).
 
 
 ## Output
@@ -43,7 +43,7 @@ For more queries, see [our discussion in the final report](report/final-presenta
 
 
 ## Results
-For a detailed result discussion, see [our discussion in the final report](report/final-presentation.pdf).
+For a detailed result discussion, see [our discussion in the final report](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/main/report/final-presentation.pdf).
 
 ### Retrieval Approaches
 * Taking intersections on Wikipedia data helps narrow down keywords
