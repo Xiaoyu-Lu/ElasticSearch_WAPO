@@ -136,3 +136,4 @@ data/*.db
 working/
 /test.sh
 /data/wiki-news-300d-1M-subword.vec
+submit/README.md

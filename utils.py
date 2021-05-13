@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue April 20 2021
+
+@author: Xiaoyu Lu
+"""
 from typing import Dict, Union, List, Generator, DefaultDict, Set, Tuple, Any
 import os
 import json

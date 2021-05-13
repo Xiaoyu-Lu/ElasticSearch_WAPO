@@ -98,6 +98,10 @@ class FastTextEmbedding:
 
 
 class LongformerEmbedding:
+    """
+    @author: Wangyong Lin
+    @modiefed by: Yunjing Lee
+    """
     def __init__(self, model_name: str) -> None:
         """
         wrapper for loading Longformer embeddings (https://github.com/UKPLab/sentence-transformers)

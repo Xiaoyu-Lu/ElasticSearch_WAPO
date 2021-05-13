@@ -5,6 +5,7 @@ let $id = function(id) {
 /**
  * Get a random number in the range [0, limit). limit is excluded.
  * @param limit Integer, upper limit of the random number (excluded)
+ * @author Yunjing Lee
  */
 let randomIdx = function(limit) {
     return Math.floor(Math.random() * limit);

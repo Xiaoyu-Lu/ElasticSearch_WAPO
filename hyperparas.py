@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue April 20 2021
+
+@author: Xiaoyu Lu
+"""
+
 # in db.py
 THRES = 40 # control min length of doc displayed on the result page
 THRES_MAX = 50 # control max length of doc displayed on the result page

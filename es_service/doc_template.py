@@ -18,6 +18,7 @@ custom_analyzer = analyzer('custom_analyzer',
 class BaseDoc(Document):
     """
     wapo document mapping structure
+    @modiefed by: Yunjing Lee
     """
 
     doc_id = (

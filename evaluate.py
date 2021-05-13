@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+Created on Tue April 20 2021
+
+@author: Xiaoyu Lu
+@modiefied by:Yunjing Lee
+"""
 import argparse
 from typing import List, Any
 from elasticsearch_dsl import Search
@@ -44,6 +50,10 @@ def search(index: str, query: Query, k: int) -> List[Any]:
 
 
 def _rerank_query(query_text: str, embed_methods: str, response: List[Any]) -> Query:
+    """
+    Created: Xiaoyu Lu
+    Modified: Yonglin Wang
+    """
     if embed_methods == "ft_vector":
         encoder = EmbeddingClient(host="localhost", embedding_type="fasttext")
     elif embed_methods == "sbert_vector":
@@ -78,7 +88,7 @@ def get_response(index_name: str,
                  embed_methods: str = "bm25",
                  k: int = 20,
                  kw_query: str = "") -> List[Any]:
-    reranking = False if embed_methods == "bm25" else True
+    reranking = (embed_methods != "bm25")
 
     # get top k query response
     top_k_query = kw_query if kw_query else query_text
@@ -190,4 +200,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

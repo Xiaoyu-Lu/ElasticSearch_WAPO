@@ -1,18 +1,15 @@
 from typing import Iterator, Dict, Union, Sequence, Generator
-
 from elasticsearch_dsl import Index  # type: ignore
-
 from elasticsearch_dsl.connections import connections  # type: ignore
 from elasticsearch.helpers import bulk
-
 from es_service.doc_template import BaseDoc
 
 
 class ESIndex(object):
     def __init__(
-        self,
-        index_name: str,
-        docs: Union[Iterator[Dict], Sequence[Dict]],
+            self,
+            index_name: str,
+            docs: Union[Iterator[Dict], Sequence[Dict]],
     ):
         """
         ES index structure
@@ -35,15 +32,16 @@ class ESIndex(object):
 
     @staticmethod
     def _populate_doc(
-        docs: Union[Iterator[Dict], Sequence[Dict]]
+            docs: Union[Iterator[Dict], Sequence[Dict]]
     ) -> Generator[BaseDoc, None, None]:
         """
         populate the BaseDoc
+        @modiefed by: Yunjing Lee
         :param docs: wapo docs
         :return:
         """
         for i, doc in enumerate(docs):
-            es_doc = BaseDoc(_id=i) # for ES index not the wapo id
+            es_doc = BaseDoc(_id=i)  # for ES index not the wapo id
             es_doc.doc_id = doc["doc_id"]
             es_doc.title = doc["title"]
             es_doc.author = doc["author"]

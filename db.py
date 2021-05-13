@@ -3,7 +3,7 @@
 """
 Created on Tue April 20 2021
 
-@author: Xiaoyu
+@author: Xiaoyu Lu
 """
 from pathlib import Path
 from playhouse.shortcuts import model_to_dict
@@ -17,9 +17,9 @@ import bisect
 from peewee import chunked
 from utils import get_word_dict, add_bold, get_seg, normalize_query
 import re
-# from functools import cache
+# from functools import cache # uncomment it if you are using python3.9
 from hyperparas import THRES, THRES_MAX
-from collections import defaultdict
+from collections import defaultdict # needed for eval
 
 data_dir = Path("data")
 db_name = "docs50k_whole.db"
@@ -122,7 +122,7 @@ def load_wapo(wapo_jl_path: Union[str, os.PathLike]) -> Iterator[Dict]:
             idx += 1
 
 
-# @cache
+# @cache # uncomment it if you are using python 3.9, or change it to lru-cache
 def embolden_text(query_text: str, doc_idx: int) -> str:
     """
     Embolden the keywords in query
