@@ -63,25 +63,23 @@ In the following table, we can see that each new technique proposed brings impro
 
 The result for our Average Precision on Title:
 
-<img src="report/IMGS/Average%20Precision%20on%20Title.png" style="zoom:70%;"  align="left"/>
+![Average Precision on Title](report/IMGS/Average%20Precision%20on%20Title.png)
 
 The result for our Web UI Home Page:
 
-<img src="report/IMGS/Web-Home-Page.png" style="zoom:90%;"  align="left"/>
+![Web UI](report/IMGS/Web-Home-Page.png)
 
 The result for our Web UI Result Page:
 
-<img src="report/IMGS/Web%20UI%20result.png" style="zoom:80%;"  align="left"/>
+![Web UI](report/IMGS/Web%20UI%20result.png)
 
 The result for our Web UI Result Page with Debug Mode:
 
-<img src="report/IMGS/Web-Result-Page-Debug-Mode.png" style="zoom:75%;"  align="left"/>
-
-
+![Web UI](report/IMGS/Web-Result-Page-Debug-Mode.png)
 
 The result for our Web UI Doc Page:
 
-<img src="report/IMGS/Web-Doc-Page.png" style="zoom:100%;"  align="left"/>
+![Web UI](report/IMGS/Web-Doc-Page.png)
 
 
 ## Results
