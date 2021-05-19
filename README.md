@@ -245,7 +245,7 @@ Intuitively, no reranking will be performed even if a reranking method is specif
 ## Team Member Contribution
 This amazing project cannot be put together without the contribution of each group member! The order below corresponds to the order in which we speak in our final presentation. 
 
-**Yonglin**: Longformer, query expansion, keyword search
+**Yonglin**: Longformer, query expansion, search by keyword
 
 **Yun-Jing**: corpus-wide and topic-level data analysis
 
