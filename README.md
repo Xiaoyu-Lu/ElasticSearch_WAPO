@@ -9,12 +9,24 @@ Team member submitting code: Xiaoyu Lu
 ### Project Summary
 In this TREC-based information retrieval project, we experimented with computer-assisted query expansion, reranking with Longformer embedding, keyword bolding, and web UI improvements. This project is built based on a ES system we previously developed in class, which uses BM25 and custom analyzer for document retrieval and fastText and sBERT embedding for reranking. 
 
-Here is a list of progress report, sorted by recency:
+### Team Member Contribution
+This amazing project cannot be put together without the contribution of each group member! The order below corresponds to the order in which we speak in [our final presentation](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/main/report/final-presentation.pdf). 
+
+**Yonglin**: Longformer, query expansion, search by keyword
+
+**Yun-Jing**: corpus-wide and topic-level data analysis
+
+**Ruobin**: web UI, on call CSS styling
+
+**Xiaoyu**: text bolding algorithm, database
+
+### Documentations
+Here is a list of progress reports, sorted by recency:
 1. [Final project report](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/main/report/final-presentation.pdf)
 2. [Second progress report](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/main/report/second-progress-report.pdf)
 3. [First progress report](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/main/report/first-progress-report.pdf)
 
-To request access to [our group project Drive folder](https://drive.google.com/drive/u/1/folders/1tzpMxcXucRHe8GyKHFNX4gqzcEOQo3vN) containing all documentations and essential datasets, you'll need to contact one of the group members.
+To request access to [our group project Drive folder](https://drive.google.com/drive/u/1/folders/1tzpMxcXucRHe8GyKHFNX4gqzcEOQo3vN) containing all the documentations and essential datasets, please contact one of the group members.
 
 ### TREC Topic Number
 In this project, we specifically examined the effect of our approaches on one of [TREC 2018 topics](https://trec.nist.gov/data/core/topics2018.txt), #805, which includes the following fields:
@@ -241,15 +253,4 @@ This is the default behavior in PA5.
 The top K results will be retrieved based on the keyword text. 
 
 Intuitively, no reranking will be performed even if a reranking method is specified. This means that if a user searches with only keywords and chooses fastText as the reranking method, the system will correct the reranking method to BM25 only (i.e. no reranking). 
-
-## Team Member Contribution
-This amazing project cannot be put together without the contribution of each group member! The order below corresponds to the order in which we speak in our final presentation. 
-
-**Yonglin**: Longformer, query expansion, search by keyword
-
-**Yun-Jing**: corpus-wide and topic-level data analysis
-
-**Ruobin**: web UI, on call CSS styling
-
-**Xiaoyu**: text bolding algorithm, database
 
