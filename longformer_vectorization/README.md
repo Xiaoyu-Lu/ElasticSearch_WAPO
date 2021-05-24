@@ -33,7 +33,7 @@ To use the script on GPU, use the following command, where the first file path i
 
 ```shell script
 TRANSFORMERS_OFFLINE=1 python longformer.py subset_wapo_50k_sbert_ft_filtered.jl \
-														subset_wapo_50k_sbert_ft_lf_filtered.jl
+                                            subset_wapo_50k_sbert_ft_lf_filtered.jl
 ```
 
 ### CPU Command
@@ -42,7 +42,7 @@ If you'd like to try the code on CPU, you can take of the ```TRANSFORMERS_OFFLIN
 
 ```shell script
 python longformer.py subset_wapo_50k_sbert_ft_filtered.jl \
-				subset_wapo_50k_sbert_ft_lf_filtered.jl
+                     subset_wapo_50k_sbert_ft_lf_filtered.jl
 ```
 
 ## Incorporating Longformer Embeddings in ElasticSearch
