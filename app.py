@@ -3,7 +3,7 @@
 """
 Created on Tue April 20 2021
 
-@author: Xiaoyu Lee
+@author: Xiaoyu Lu
 @modified by: Ruobin Hu, Yonglin Wang, Yunjing Lee
 """
 import argparse
