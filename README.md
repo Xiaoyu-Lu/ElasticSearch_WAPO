@@ -1,13 +1,17 @@
 # ElasticSearch on TREC: Eating Invasive Species
 This repository is for the final project of COSI 132A, Information Retrieval. 
 
+System demo, searching for articles related to our topic of interest, "Eating Invasive Species":
+
+![System Demo](report/IMGS/UI_example.gif)
+
 ## Basic Information
 Team members: Yonglin Wang,  Xiaoyu Lu, Yun-Jing Lee, Ruobin Hu
 
 Team member submitting code: Xiaoyu Lu
 
 ### Project Summary
-In this TREC-based information retrieval project, we experimented with computer-assisted query expansion, reranking with Longformer embedding, keyword bolding, and web UI improvements. This project is built based on a ES system we previously developed in class, which uses BM25 and custom analyzer for document retrieval and fastText and sBERT embedding for reranking. 
+In this TREC-based information retrieval project, we experimented with computer-assisted query expansion, reranking with Longformer embedding, keyword bolding, and web UI improvements. This project is built based on a ES system we previously developed in class, which uses BM25 and a custom analyzer for document retrieval and fastText and sBERT embedding for reranking. 
 
 Here is a list of progress report, sorted by recency:
 1. [Final project report](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/main/report/final-presentation.pdf)
@@ -16,8 +20,8 @@ Here is a list of progress report, sorted by recency:
 
 To request access to [our group project Drive folder](https://drive.google.com/drive/u/1/folders/1tzpMxcXucRHe8GyKHFNX4gqzcEOQo3vN) containing all documentations and essential datasets, you'll need to contact one of the group members.
 
-### TREC Topic Number
-In this project, we specifically examined the effect of our approaches on one of [TREC 2018 topics](https://trec.nist.gov/data/core/topics2018.txt), #805, which includes the following fields:
+### TREC Topic for Evaluation: Eating Invasive Species
+In this project, we specifically evaluated the effect of our approaches on one of [TREC 2018 topics](https://trec.nist.gov/data/core/topics2018.txt), #805, which includes the following fields:
 
 ```xml
 <top>
@@ -42,8 +46,8 @@ Each query below builds on the previous one; additional terms are underlined.
 - **Default Title**: eating invasive species
 
 - **Wiki** (adding Wikipedia species expansion): eating invasive species <u>Kudzu Zebra mussel Asian carp Snakehead Giant African land snail Lionfish</u>
-- **Wiki + Cook**: eating <u>cooking</u> invasive species Kudzu Zebra mussel Asian carp Snakehead Giant African land snail Lionfish
-- **Wiki + Cook + NL (Natural Langauge)**: eating <u>and</u> cooking invasive species <u>such as</u> Kudzu Zebra mussel Asian carp Snakehead Giant African land snail <u>and</u> Lionfish
+- **Wiki + Cook** (adding GloVe informed synonym for *eating*): eating <u>cooking</u> invasive species Kudzu Zebra mussel Asian carp Snakehead Giant African land snail Lionfish
+- **Wiki + Cook + NL (Natural Langauge)** (adding functional words to reranking query): eating <u>and</u> cooking invasive species <u>such as</u> Kudzu Zebra mussel Asian carp Snakehead Giant African land snail <u>and</u> Lionfish
 
 For more queries, see [our discussion in the final report](https://github.com/Xiaoyu-Lu/ElasticSearch_WAPO/blob/main/report/final-presentation.pdf).
 
@@ -51,7 +55,7 @@ For more queries, see [our discussion in the final report](https://github.com/Xi
 
 #### Queries used in term expansion
 
-In the following table, we can see that each new technique proposed brings improvement in two or all of the scores. 
+In the following table, we can see that each new technique proposed brings improvement in two or all of the scores. All best results are from using custom analyzer and BM25 for retrieval and sBERT for reranking. 
 
 | Score Type | Wiki + Cook + NL rerank | Wiki + Cook | Wiki  | PA Best (Default Title) |
 | ---------- | ----------------------- | ----------- | ----- | ----------------------- |
@@ -59,25 +63,43 @@ In the following table, we can see that each new technique proposed brings impro
 | Precision  | 0.5                     | 0.5         | 0.45  | 0.35                    |
 | NDCG@20    | 0.917                   | 0.836       | 0.772 | 0.695                   |
 
+#### Average Precision by Topic Number
 
-
-The result for our Average Precision on Title:
+The result for our Average Precision of retrieving with title text for each TREC topic: 
 
 ![Average Precision on Title](report/IMGS/Average%20Precision%20on%20Title.png)
 
-The result for our Web UI Home Page:
+From this graph, we can see that no one single embedding method outperforms others across topics. Which embedding to use for reranking seems to depend on the content of the query. Therefore, in the future, it would be beneficial to cluster queries based on their content and other characteristics and determine which embedding method to apply to which cluster of queries. 
 
-![Web UI](report/IMGS/Web-Home-Page.png)
+#### Web UI Home Page
 
-The result for our Web UI Result Page:
+Below is the screenshot for our Web UI Home Page, note that "I feel lucky!" will choose a random Analyzer + Embedding combination for the user, in order to reduce the friction in deciding on a combination:
 
-![Web UI](report/IMGS/Web%20UI%20result.png)
+![Web UI home](report/IMGS/Web-Home-Page.png)
 
-The result for our Web UI Result Page with Debug Mode:
+#### Web UI Result Page
 
-![Web UI](report/IMGS/Web-Result-Page-Debug-Mode.png)
+Below is the screenshot for our Web UI Result Page, where we first retrieve by the keyword "fish" and rerank the retrieved documents with "eating invasive species", note that 
 
-The result for our Web UI Doc Page:
+1. the title link shows underline when cursor hovers over.
+2. the snippets highlights the keywords in the reranking query, regardless of morphological inflections (e.g. "eat" is also highlighted while only "eating" is present in the query)
+
+![Web UI results](report/IMGS/Web%20UI%20result.png)
+
+
+
+#### Web UI Result Page with Debug Mode
+
+Below is the screenshot for our Web UI Result Page with Debug Mode using *Wiki + Cook* query for retrieval and *Wiki + Cook + NL* query for reranking, note that 
+
+1. AP (Average Precision), Precision, and NDCG (Normalized Discounted Cumulative Gain) are now shown.
+2. relevance annotations (805-1 = relevant to Topic 805; 805-2 = highly relevant to Topic 805; 805-0, other topic ID, or no annotation = not relevant to Topic 805) now appears on the right of the title link.
+
+![Web UI with debug](report/IMGS/UI_Debug.gif)
+
+#### Web UI Document Page
+
+Below is the screenshot for our Web UI Doc Page, where we display the content of the WAPO article after the user clicks on its title on the result page. 
 
 ![Web UI](report/IMGS/Web-Doc-Page.png)
 
@@ -215,7 +237,7 @@ python -m embedding_service.server --embedding longformer --model allenai/longfo
     sh scirpts.sh
     ```
 
-- For web app:
+- For the web app:
 
     Run the app, then type http://127.0.0.1:5000/ in the browser to view the web application.
     
