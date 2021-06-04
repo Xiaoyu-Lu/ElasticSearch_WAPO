@@ -1,5 +1,5 @@
 # ElasticSearch on TREC: Eating Invasive Species
-This repository is for the final project of COSI 132A, Information Retrieval. 
+This repository is for the final project of COSI 132A, Information Retrieval. We used TREC as our annotated dataset to build a news article search engine that can retrieve documents relevant to a user query on a topic. 
 
 System demo, searching for articles related to our topic of interest, "Eating Invasive Species":
 
